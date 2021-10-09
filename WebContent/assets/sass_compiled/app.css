@@ -1,1 +1,16 @@
 @charset "UTF-8";
+
+.img-home {
+	max-width: 100px;
+	width: 100%;
+}
+
+.banner {
+	position: relative;
+	/* border: 1px solid red; */
+}
+
+.banner > .banner-content {
+	/* border: 1px solid blue; */
+	/* color: red; */
+}
