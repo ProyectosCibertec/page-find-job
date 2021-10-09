@@ -10,10 +10,10 @@
 
 				<ul
 					class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
-					<li><a href="#" class="nav-link px-2 text-secondary">Inicio</a></li>
+					<li><a href="index.jsp" class="nav-link px-2 text-secondary">Inicio</a></li>
 					<li><a href="#" class="nav-link px-2 text-white">Publicar
 							ofertas</a></li>
-					<li><a href="#" class="nav-link px-2 text-white">Nosotros</a></li>
+					<li><a href="nosotros.jsp" class="nav-link px-2 text-white">Nosotros</a></li>
 				</ul>
 
 				<div class="col-md-3 text-end">
