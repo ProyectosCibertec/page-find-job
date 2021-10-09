@@ -1,4 +1,6 @@
 <%@tag description="Overall Page template" pageEncoding="UTF-8"%>
+<%@taglib prefix="t" tagdir="/WEB-INF/tags"%>
+
 <%@attribute name="titlePage" required="false"%>
 <%@attribute name="css" required="false"%>
 <%@attribute name="header" required="false"%>
@@ -21,9 +23,9 @@ if (titlePage != null)
 </head>
 <body>
 	<%if (header == null) {%>
-		<%@include file="../includes/header.jsp"%>
+		<t:header/> <!-- isLogin="true"  -->
 	<%}%>
-
+	
 	<%-- Body --%>
 	<jsp:doBody />
 	<%-- End-Body --%>
