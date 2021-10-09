@@ -10,7 +10,7 @@
 	/* border: 1px solid red; */
 }
 
-.banner > .banner-content {
-	/* border: 1px solid blue; */
-	/* color: red; */
+.border-radius-bottom-125 {
+	border-bottom-right-radius: 1.25rem;
+	border-bottom-left-radius: 1.25rem;
 }

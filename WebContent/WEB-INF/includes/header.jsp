@@ -1,9 +1,9 @@
-<div class="container">
-	<header class="p-3 bg-dark text-white">
+<div class="container sticky-top mb-4">
+	<header class="p-3 bg-dark text-white border-radius-bottom-125">
 		<div class="container">
 			<div
 				class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between">
-				<a href="/"
+				<a href="index.jsp"
 					class="d-flex align-items-center col-md-3 mb-2 mb-md-0 text-dark text-decoration-none">
 					<img class="img-home" src="assets/images/practicas-pre.png" />
 				</a>
@@ -17,8 +17,8 @@
 				</ul>
 
 				<div class="col-md-3 text-end">
-					<button type="button" class="btn btn-outline-light me-2">Login</button>
-					<button type="button" class="btn btn-warning">Sign-up</button>
+					<a href="sign-in.jsp" class="btn btn-outline-light me-2">Login</a>
+					<a href="#" class="btn btn-warning">Sign-up</a>
 				</div>
 			</div>
 		</div>

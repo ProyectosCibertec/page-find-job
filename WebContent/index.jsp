@@ -3,6 +3,7 @@
 <%@taglib prefix="t" tagdir="/WEB-INF/tags"%>
 
 <t:layout>
+
 	<jsp:body>
 	<div class="container">
 		<div class="banner">
@@ -14,4 +15,5 @@
 		</div>
 	</div>
     </jsp:body>
+
 </t:layout>
