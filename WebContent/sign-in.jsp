@@ -5,14 +5,17 @@
 <t:layout titlePage="Login" css="login.css">
 	<jsp:body>
 		<div class="container">
-		  <main class="form-signin">
-		    <form>
+		  <main class="form-signin flex-column">
 		    <div
-						class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-center mb-4">
+					class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-center mb-4">
 		      <img
-							src="https://getbootstrap.com//docs/5.1/assets/brand/bootstrap-logo.svg"
-							alt="" width="72" height="57">
+						src="https://getbootstrap.com//docs/5.1/assets/brand/bootstrap-logo.svg"
+						alt="" width="72" height="57">
 		    </div>
+			<div class='switch'>
+			  <input type='checkbox' checked>
+			</div>
+		    <form>
 		      <h1 class="h3 mb-3 fw-normal">Iniciar sessión</h1>
 		
 		      <div class="form-floating">

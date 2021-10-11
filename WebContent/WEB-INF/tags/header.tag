@@ -1,4 +1,4 @@
-<%@ tag language="java" pageEncoding="UTF-8"%>
+<%@ tag description="header" pageEncoding="UTF-8"%>
 <%@attribute name="isLogin" required="false"%>
 
 <div class="container sticky-top mb-4">

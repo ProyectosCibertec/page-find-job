@@ -5,12 +5,41 @@
 	width: 100%;
 }
 
+.container {
+	max-width: 1600px;
+	width: 95%;
+}
+
+.w80 {
+	width: 80%;
+	margin: auto;
+}
+
 .banner {
 	position: relative;
 	/* border: 1px solid red; */
 }
 
+.banner>.banner-content {
+	position: absolute;
+	max-width: 400px;
+	top: 50%;
+	left: 5%;
+	transform: translateY(-50%);
+	color: #000000;
+}
+
+.border-radius-125 {
+	border-radius: 1.25rem;
+}
+
 .border-radius-bottom-125 {
 	border-bottom-right-radius: 1.25rem;
 	border-bottom-left-radius: 1.25rem;
+}
+
+.offer {
+	border: 2px solid black;
+	border-radius: 10px;
+	padding: 10px 15px;
 }
