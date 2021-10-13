@@ -1,3 +1,4 @@
+<%@page import="management.UserManagement"%>
 <%@page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="f"%>
@@ -11,8 +12,10 @@ String language[] = { "HTML", "JAVA", "JAVASCRIPT", "CSS3", "RUBY", "GO", "MONGO
 
 pageContext.setAttribute("demo", numbers);
 pageContext.setAttribute("languages", language);
+
+request.getAttribute("user");
 %>
-<t:layout>
+<t:layout user="${user}">
 
 	<jsp:body>
 		<div class="container">
@@ -48,7 +51,7 @@ pageContext.setAttribute("languages", language);
 				</div>
 			</div>
 		</div>
-		
+		<h1>Tipo de Dato: ${user.getClass().getSimpleName()}</h1>
 		<div class="container mt-4">
 			<div class="content w80" style="padding: 0 12px">
 				<f:forEach var="a" items="${demo}">

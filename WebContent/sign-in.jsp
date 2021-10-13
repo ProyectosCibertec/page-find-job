@@ -15,17 +15,17 @@
 			<div class='switch'>
 			  <input type='checkbox' checked>
 			</div>
-		    <form>
+		    <form action="userServlet" method="POST">
 		      <h1 class="h3 mb-3 fw-normal">Iniciar sessión</h1>
 		
 		      <div class="form-floating">
 		        <input type="email" class="form-control" id="inputEmail"
-							placeholder="name@example.com">
+							name="inputEmail" placeholder="name@example.com">
 		        <label for="inputEmail">Correo electrónico</label>
 		      </div>
 		      <div class="form-floating">
 		        <input type="password" class="form-control" id="inputPassword"
-							placeholder="Password">
+							name="inputPassword" placeholder="Password">
 		        <label for="inputPassword">Contraseña</label>
 		      </div>
 		
@@ -34,7 +34,8 @@
 		          <input type="checkbox" value="remember-me"> Recuérdame
 		        </label>
 		      </div>
-		      <button class="w-100 btn btn-lg btn-primary" type="submit">Ingresar</button>
+		      <button name="button" value="login"
+						class="w-100 btn btn-lg btn-primary" type="submit">Ingresar</button>
 		    </form>
 		  </main>
 		    <p class="small text-center text-gray-soft">¿Aún no tienes cuenta? <a

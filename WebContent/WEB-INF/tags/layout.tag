@@ -1,9 +1,12 @@
-<%@tag language="java" description="Overall Page template" pageEncoding="UTF-8"%>
+<%@tag language="java" description="Overall Page template"
+	pageEncoding="UTF-8"%>
 <%@taglib prefix="t" tagdir="/WEB-INF/tags"%>
 
 <%@attribute name="titlePage" required="false"%>
 <%@attribute name="css" required="false"%>
 <%@attribute name="header" required="false"%>
+<%@attribute name="user" required="false"%>
+
 
 <!DOCTYPE html>
 <html>
@@ -30,14 +33,14 @@ if (titlePage != null)
 
 <link rel="stylesheet" href="assets/sass_compiled/app.css">
 
-<%if (css != null){%>
+<%if (css != null) {%>
 <link rel="stylesheet" href="assets/sass_compiled/${css}">
 <%}%>
 
 </head>
 <body>
 	<%if (header == null) {%>
-	<t:header />
+	<t:header user="${user}" />
 	<!-- isLogin="true"  -->
 	<%}%>
 

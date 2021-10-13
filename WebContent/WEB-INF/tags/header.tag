@@ -1,5 +1,10 @@
 <%@ tag description="header" pageEncoding="UTF-8"%>
-<%@attribute name="isLogin" required="false"%>
+<%-- <%@attribute name="isLogin" required="false"%> --%>
+<%@attribute name="user" required="false"%>
+
+<%
+Boolean isLogin = (user != null && user != "") ? true : false;
+%>
 
 <div class="container sticky-top mb-4">
 	<header class="p-3 bg-dark text-white border-radius-bottom-125">
@@ -19,7 +24,7 @@
 					<li><a href="nosotros.jsp" class="nav-link px-2 text-white">Nosotros</a></li>
 				</ul>
 
-				<%if (isLogin == null) {%>
+				<%if (isLogin != true) {%>
 
 				<div class="col-md-3 text-end">
 					<a href="sign-in.jsp" class="btn btn-outline-light me-2">Login</a>
@@ -37,7 +42,7 @@
 						aria-labelledby="dropdownUser1">
 						<li><a class="dropdown-item" href="#">New project...</a></li>
 						<li><a class="dropdown-item" href="#">Settings</a></li>
-						<li><a class="dropdown-item" href="#">Profile</a></li>
+						<li><a class="dropdown-item" href="#">${user}</a></li>
 						<li>
 							<hr class="dropdown-divider">
 						</li>
