@@ -5,7 +5,7 @@
 <%@attribute name="titlePage" required="false"%>
 <%@attribute name="css" required="false"%>
 <%@attribute name="header" required="false"%>
-<%@attribute name="user" required="false"%>
+
 
 
 <!DOCTYPE html>
@@ -40,8 +40,7 @@ if (titlePage != null)
 </head>
 <body>
 	<%if (header == null) {%>
-	<t:header user="${user}" />
-	<!-- isLogin="true"  -->
+	<t:header />
 	<%}%>
 
 	<%-- Body --%>

@@ -1,5 +1,3 @@
-/utils/
-/interfaces/
-/management/
-/model/
+/dao/
 /servlets/
+/management/

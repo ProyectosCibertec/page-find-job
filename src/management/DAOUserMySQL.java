@@ -8,7 +8,7 @@ import interfaces.UserInterface;
 import model.User;
 import utils.MySQLConnection;
 
-public class UserManagement implements UserInterface {
+public class DAOUserMySQL implements UserInterface {
 
 	@Override
 	public User get(String email, String password) {

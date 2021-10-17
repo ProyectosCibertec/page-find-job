@@ -1,9 +1,12 @@
+<%@tag import="model.User"%>
 <%@ tag description="header" pageEncoding="UTF-8"%>
 <%-- <%@attribute name="isLogin" required="false"%> --%>
 <%@attribute name="user" required="false"%>
 
 <%
 Boolean isLogin = (user != null && user != "") ? true : false;
+User uo = (User) request.getSession().getAttribute("u");
+
 %>
 
 <div class="container sticky-top mb-4">
@@ -24,7 +27,7 @@ Boolean isLogin = (user != null && user != "") ? true : false;
 					<li><a href="nosotros.jsp" class="nav-link px-2 text-white">Nosotros</a></li>
 				</ul>
 
-				<%if (isLogin != true) {%>
+				<%if (uo == null) {%>
 
 				<div class="col-md-3 text-end">
 					<a href="sign-in.jsp" class="btn btn-outline-light me-2">Login</a>
@@ -40,13 +43,13 @@ Boolean isLogin = (user != null && user != "") ? true : false;
 					</a>
 					<ul class="dropdown-menu text-small"
 						aria-labelledby="dropdownUser1">
-						<li><a class="dropdown-item" href="#">New project...</a></li>
-						<li><a class="dropdown-item" href="#">Settings</a></li>
-						<li><a class="dropdown-item" href="#">${user}</a></li>
+						<li><span class="dropdown-item">${u.email}</span></li>
+						<li><a class="dropdown-item" href="#">Perfil</a></li>
+						<li><a class="dropdown-item" href="#">Mis propuestas</a></li>
 						<li>
 							<hr class="dropdown-divider">
 						</li>
-						<li><a class="dropdown-item" href="#">Signs out</a></li>
+						<li><a class="dropdown-item" href="userServlet">Signs out</a></li>
 					</ul>
 				</div>
 				<%}%>
