@@ -15,11 +15,12 @@ create table offer (
     description varchar(2500) not null,
     limit_date date null,
     create_date date not null,
+    update_date DATETIME null,
     vacants int not null
 );
 
 create table offer_languages(
-	id int not null primary key auto_increment,
+    id int not null primary key auto_increment,
     id_offer int not null,
     id_language int not null,
     FOREIGN KEY (id_language) REFERENCES languages(id),
@@ -445,3 +446,30 @@ call usp_add_offer_language('116','8');
 SELECT * FROM offer;
 SELECT * FROM languages;
 SELECT * FROM offer_languages;
+
+-- USER
+
+CREATE TABLE usuario (
+    id					INT 			NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    password			VARCHAR(50)		NOT NULL,
+    email				VARCHAR(50)		NOT NULL,
+    active				INT				NOT NULL,
+    super_user			INT				NULL DEFAULT 0,
+    creation_date		DATETIME		NOT NULL,
+    update_date			DATETIME		NULL,
+    empresa				INT				NOT NULL
+);
+
+
+ALTER TABLE usuario AUTO_INCREMENT = 1000;
+
+INSERT INTO usuario VALUES(default, 1234,'demo@demo.com',1,0,'2010-09-15 17:14:12', null);
+INSERT INTO usuario VALUES(default, 1234,'demo2@demo.com',1,0,'2010-09-15 17:14:12', null);
+INSERT INTO usuario VALUES(default, 1234,'demo3@demo.com',1,0,'2010-09-15 17:14:12', null);
+
+DELIMiTER $$
+CREATE PROCEDURE usp_get_user(v_email VARCHAR(50), v_password VARCHAR(50))
+BEGIN
+	 SELECT * FROM usuario WHERE email = v_email AND password = v_password;
+END$$
+DELIMiTER ;
