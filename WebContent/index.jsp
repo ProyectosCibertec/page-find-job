@@ -1,16 +1,22 @@
+<%@page import="model.Language"%>
+<%@page import="model.Offer"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="dao.DAOFactory"%>
 <%@page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="f"%>
 
-
 <%@taglib prefix="t" tagdir="/WEB-INF/tags"%>
 <%@taglib prefix="c" tagdir="/WEB-INF/tags/components"%>
 <%
-int numbers[] = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
-String language[] = { "HTML", "JAVA", "JAVASCRIPT", "CSS3", "RUBY", "GO", "MONGODB" };
 
-pageContext.setAttribute("demo", numbers);
-pageContext.setAttribute("languages", language);
+DAOFactory factory = DAOFactory.getDAOFactory(DAOFactory.MYSQL);
+ArrayList<Offer> offerList = factory.getOfferDAO().list();
+ArrayList<Language> languageList = factory.getLanguageDAO().list();
+
+pageContext.setAttribute("offerList", offerList);
+pageContext.setAttribute("languageList", languageList);
+
 %>
 <t:layout>
 
@@ -38,8 +44,8 @@ pageContext.setAttribute("languages", language);
 				<select class="form-select p-0 col selectpicker" multiple
 					data-live-search="true" aria-label="Seleccionar">
 
-					<f:forEach var="language" varStatus="status" items="${languages}">
-						<option value="${language.toLowerCase()}">${language}</option>
+					<f:forEach var="l" items="${languageList}">
+						<option value="${l.name.toLowerCase()}">${l.name.toUpperCase()}</option>
 					</f:forEach>
 
 				</select>
@@ -49,12 +55,11 @@ pageContext.setAttribute("languages", language);
 			</div>
 		</div>
 		<div class="container mt-4">
-			<div class="content w80" style="padding: 0 12px">
-				<f:forEach var="a" items="${demo}">
-					<c:offer title="Practicante Front End"
-						description="Se busca un practicante de desvarrollo
-							Front-End Se busca un practicante de desa..."
-						expires="23/10/2021" vacant="${a}" />
+			<div class="content w80" style="padding: 0 12px">		
+				<f:forEach var="ol" items="${offerList}">
+					<c:offer title="${ol.title}" description="${ol.description}"
+						expires="${ol.limitDate}" vacant="${ol.vacants}"
+						offerId="${ol.code}" />
 				</f:forEach>
 			</div>
 		</div>
@@ -78,7 +83,6 @@ pageContext.setAttribute("languages", language);
 				</nav>
 			</div>
 		</div>
-
 		
     </jsp:body>
 

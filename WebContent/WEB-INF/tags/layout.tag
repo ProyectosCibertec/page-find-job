@@ -6,6 +6,11 @@
 <%@attribute name="css" required="false"%>
 <%@attribute name="header" required="false"%>
 
+<%
+String path = request.getContextPath();
+String basePath = request.getScheme()+"://" +request.getServerName()+":"+request.getServerPort()+path+"/" ;
+%>
+
 
 
 <!DOCTYPE html>
@@ -28,19 +33,19 @@ if (titlePage != null)
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/css/bootstrap-select.css" />
 
-<link rel="shortcut icon" href="assets/images/icons/favicon.svg"
+<link rel="shortcut icon" href="<%=basePath%>assets/images/icons/favicon.svg"
 	type="image/x-icon">
 
-<link rel="stylesheet" href="assets/sass_compiled/app.css">
+<link rel="stylesheet" href="<%=basePath%>assets/sass_compiled/app.css">
 
 <%if (css != null) {%>
-<link rel="stylesheet" href="assets/sass_compiled/${css}">
+<link rel="stylesheet" href="<%=basePath%>assets/sass_compiled/${css}">
 <%}%>
 
 </head>
 <body>
 	<%if (header == null) {%>
-	<t:header />
+	<t:header basePath="<%=basePath%>" />
 	<%}%>
 
 	<%-- Body --%>

@@ -3,7 +3,7 @@
 
 <%
 String color;
-switch (language) {
+switch (language.toUpperCase()) {
 case "JAVA":
 case "RUBY":
 	color = "danger";
@@ -19,4 +19,4 @@ default:
 }
 %>
 
-<span class="btn btn-outline-<%=color%> btn-sm mt-1" style="cursor: default;">${language}</span>
+<span class="btn btn-outline-<%=color%> btn-sm mt-1" style="cursor: default;">${language.toUpperCase()}</span>
