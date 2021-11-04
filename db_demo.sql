@@ -5,6 +5,11 @@ CREATE DATABASE pageFindJob;
 -- activamos la bd
 USE pageFindJob;
 
+CREATE TABLE pais(
+	id					INT 			NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    name				VARCHAR(20)		NOT NULL
+);
+
 CREATE TABLE usuario (
 	id					INT 			NOT NULL PRIMARY KEY AUTO_INCREMENT,
     email				VARCHAR(50)		NOT NULL,
@@ -17,8 +22,10 @@ CREATE TABLE usuario (
     super_user			INT				NULL DEFAULT 0,
     empresa				INT				NOT NULL,
     address				VARCHAR(200)	NULL,
+    pais_id				INT				NULL,
 	creation_date		DATETIME		NOT NULL,
-    update_date			DATETIME		NULL
+    update_date			DATETIME		NULL,
+    FOREIGN KEY(pais_id)			REFERENCES	pais(id)
 );
 
 
@@ -552,4 +559,3 @@ call usp_list_language_by_offer('1017');
 
 
 
-|
