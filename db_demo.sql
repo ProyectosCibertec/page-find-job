@@ -49,23 +49,6 @@ CREATE TABLE user_redes(
     FOREIGN KEY(redes_id)			REFERENCES redes(id)
 );
 
-CREATE TABLE postulant_offer(
-	id					INT 		NOT NULL PRIMARY KEY	AUTO_INCREMENT,
-    usuario_id			INT			NOT NULL,
-    offer_id			INT			NOT NULL,
-    FOREIGN KEY(usuario_id)		REFERENCES	usuario(id),
-    FOREIGN KEY(offer_id)		REFERENCES	offer(id)
-);
-
-
-CREATE TABLE empresa_offer(
-	id					INT 		NOT NULL PRIMARY KEY	AUTO_INCREMENT,
-    usuario_id			INT			NOT NULL,
-    offer_id			INT			NOT NULL,
-    FOREIGN KEY(usuario_id)		REFERENCES	usuario(id),
-    FOREIGN KEY(offer_id)		REFERENCES	offer(id)
-);
-
 CREATE TABLE languages(
     id					INT				NOT NULL	PRIMARY KEY AUTO_INCREMENT,
     name 				VARCHAR(50)		NOT NULL
@@ -95,6 +78,24 @@ CREATE TABLE files(
     file				BLOB 			NULL,
     title				VARCHAR(155)	NULL
 );
+
+CREATE TABLE postulant_offer(
+	id					INT 		NOT NULL PRIMARY KEY	AUTO_INCREMENT,
+    usuario_id			INT			NOT NULL,
+    offer_id			INT			NOT NULL,
+    FOREIGN KEY(usuario_id)		REFERENCES	usuario(id),
+    FOREIGN KEY(offer_id)		REFERENCES	offer(id)
+);
+
+
+CREATE TABLE empresa_offer(
+	id					INT 		NOT NULL PRIMARY KEY	AUTO_INCREMENT,
+    usuario_id			INT			NOT NULL,
+    offer_id			INT			NOT NULL,
+    FOREIGN KEY(usuario_id)		REFERENCES	usuario(id),
+    FOREIGN KEY(offer_id)		REFERENCES	offer(id)
+);
+
 
 ALTER TABLE usuario AUTO_INCREMENT = 1000;
 ALTER TABLE offer AUTO_INCREMENT = 1000;
@@ -551,3 +552,4 @@ call usp_list_language_by_offer('1017');
 
 
 
+|
