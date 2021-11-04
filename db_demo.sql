@@ -7,17 +7,18 @@ USE pageFindJob;
 
 CREATE TABLE usuario (
 	id					INT 			NOT NULL PRIMARY KEY AUTO_INCREMENT,
-    password			VARCHAR(50)		NOT NULL,
     email				VARCHAR(50)		NOT NULL,
-    active				INT				NOT NULL,
-    super_user			INT				NULL DEFAULT 0,
-    creation_date		DATETIME		NOT NULL,
-    update_date			DATETIME		NULL,
-    empresa				INT				NOT NULL,
+    password			VARCHAR(50)		NOT NULL,
     name				VARCHAR(25)		NOT NULL,
     lastname			VARCHAR(255)	NOT NULL,
     phone				CHAR(11)		NULL,
-    address				VARCHAR(200)	NULL
+    birth_date			DATE			NULL,
+    active				INT				NOT NULL,
+    super_user			INT				NULL DEFAULT 0,
+    empresa				INT				NOT NULL,
+    address				VARCHAR(200)	NULL,
+	creation_date		DATETIME		NOT NULL,
+    update_date			DATETIME		NULL
 );
 
 
@@ -138,10 +139,10 @@ DELIMiTER ;
 
 -- insert USERS
 
+INSERT INTO usuario VALUES(default,'demo@demo.com', 1234, 'Demo1', 'Lastname Demo', '999999999', '2010-09-15', 1, 0 ,0, 'Av siempre viva','2010-09-15 17:14:12', null);
+INSERT INTO usuario VALUES(default,'demo2@demo.com', 1234, 'Demo2', 'Lastname Demo', '999999999', '2010-09-15', 1, 0 ,0, 'Av siempre viva','2010-09-15 17:14:12', null);
+INSERT INTO usuario VALUES(default,'demo3@demo.com', 1234, 'Demo3', 'Lastname Demo', '999999999', '2010-09-15', 1, 0 ,0, 'Av siempre viva','2010-09-15 17:14:12', null);
 
-INSERT INTO usuario VALUES(default, 1234,'demo@demo.com',1,0,'2010-09-15 17:14:12', null,0, 'Demo1', 'Lastname Demo', '999999999','Av siempre viva');
-INSERT INTO usuario VALUES(default, 1234,'demo2@demo.com',1,0,'2010-09-15 17:14:12', null,0, 'Demo2', 'Lastname Demo', '999999999','Av siempre viva');
-INSERT INTO usuario VALUES(default, 1234,'demo3@demo.com',1,0,'2010-09-15 17:14:12', null,0, 'Demo3', 'Lastname Demo', '999999999','Av siempre viva');
 
 -- inserts LANGUAGES
 
