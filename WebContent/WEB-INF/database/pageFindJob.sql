@@ -5,17 +5,56 @@ CREATE DATABASE pageFindJob;
 -- activamos la bd
 USE pageFindJob;
 
-CREATE TABLE usuario (
+CREATE TABLE pais(
 	id					INT 			NOT NULL PRIMARY KEY AUTO_INCREMENT,
-    password			VARCHAR(50)		NOT NULL,
-    email				VARCHAR(50)		NOT NULL,
-    active				INT				NOT NULL,
-    super_user			INT				NULL DEFAULT 0,
-    creation_date		DATETIME		NOT NULL,
-    update_date			DATETIME		NULL,
-    empresa				INT				NOT NULL
+    name				VARCHAR(20)		NOT NULL
 );
 
+CREATE TABLE usuario (
+	id					INT 			NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    email				VARCHAR(50)		NOT NULL,
+    password			VARCHAR(50)		NOT NULL,
+    name				VARCHAR(25)		NOT NULL,
+    lastname			VARCHAR(255)	NOT NULL,
+    phone				CHAR(11)		NULL,
+    birth_date			DATE			NULL,
+    active				INT				NOT NULL,
+    super_user			INT				NULL DEFAULT 0,
+    empresa				INT				NOT NULL,
+    address				VARCHAR(200)	NULL,
+    pais_id				INT				NULL,
+	creation_date		DATETIME		NOT NULL,
+    update_date			DATETIME		NULL,
+    FOREIGN KEY(pais_id)			REFERENCES	pais(id)
+);
+
+
+CREATE TABLE skills(
+	id					INT				NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    name				VARCHAR(100)	NOT NULL
+);
+
+CREATE TABLE user_skills(
+	id					INT				NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    usuario_id			INT				NOT NULL,
+    skills_id			INT				NOT NULL,
+    FOREIGN KEY(usuario_id)			REFERENCES usuario(id),
+    FOREIGN KEY(skills_id)			REFERENCES skills(id)
+);
+
+CREATE TABLE redes (
+	id					INT				NOT NULL 	PRIMARY KEY AUTO_INCREMENT,
+    name				VARCHAR(100)	NOT NULL,
+    description			VARCHAR(150)	NOT NULL
+);
+
+CREATE TABLE user_redes(
+	id					INT				NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    usuario_id			INT				NOT NULL,
+    redes_id			INT				NOT NULL,
+    FOREIGN KEY(usuario_id)			REFERENCES usuario(id),
+    FOREIGN KEY(redes_id)			REFERENCES redes(id)
+);
 
 CREATE TABLE languages(
     id					INT				NOT NULL	PRIMARY KEY AUTO_INCREMENT,
@@ -31,6 +70,7 @@ CREATE TABLE offer (
     vacants 			INT				NULL
 );
 
+
 CREATE TABLE offer_languages(
 	id 					INT				NOT NULL	PRIMARY KEY	AUTO_INCREMENT,
     id_offer 			INT				NOT NULL,
@@ -38,6 +78,31 @@ CREATE TABLE offer_languages(
     FOREIGN KEY (id_language) REFERENCES languages(id),
     FOREIGN KEY (id_offer) REFERENCES offer(id)
 );
+
+CREATE TABLE files(
+	id					INT				NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    usuario_id			INT				NOT NULL,
+    file				BLOB 			NULL,
+    title				VARCHAR(155)	NULL
+);
+
+CREATE TABLE postulant_offer(
+	id					INT 		NOT NULL PRIMARY KEY	AUTO_INCREMENT,
+    usuario_id			INT			NOT NULL,
+    offer_id			INT			NOT NULL,
+    FOREIGN KEY(usuario_id)		REFERENCES	usuario(id),
+    FOREIGN KEY(offer_id)		REFERENCES	offer(id)
+);
+
+
+CREATE TABLE empresa_offer(
+	id					INT 		NOT NULL PRIMARY KEY	AUTO_INCREMENT,
+    usuario_id			INT			NOT NULL,
+    offer_id			INT			NOT NULL,
+    FOREIGN KEY(usuario_id)		REFERENCES	usuario(id),
+    FOREIGN KEY(offer_id)		REFERENCES	offer(id)
+);
+
 
 ALTER TABLE usuario AUTO_INCREMENT = 1000;
 ALTER TABLE offer AUTO_INCREMENT = 1000;
@@ -82,10 +147,10 @@ DELIMiTER ;
 
 -- insert USERS
 
+INSERT INTO usuario VALUES(default,'demo@demo.com', 1234, 'Demo1', 'Lastname Demo', '999999999', '2010-09-15', 1, 0 ,0, 'Av siempre viva','2010-09-15 17:14:12', null);
+INSERT INTO usuario VALUES(default,'demo2@demo.com', 1234, 'Demo2', 'Lastname Demo', '999999999', '2010-09-15', 1, 0 ,0, 'Av siempre viva','2010-09-15 17:14:12', null);
+INSERT INTO usuario VALUES(default,'demo3@demo.com', 1234, 'Demo3', 'Lastname Demo', '999999999', '2010-09-15', 1, 0 ,0, 'Av siempre viva','2010-09-15 17:14:12', null);
 
-INSERT INTO usuario VALUES(default, 1234,'demo@demo.com',1,0,'2010-09-15 17:14:12', null,0);
-INSERT INTO usuario VALUES(default, 1234,'demo2@demo.com',1,0,'2010-09-15 17:14:12', null,0);
-INSERT INTO usuario VALUES(default, 1234,'demo3@demo.com',1,0,'2010-09-15 17:14:12', null,0);
 
 -- inserts LANGUAGES
 

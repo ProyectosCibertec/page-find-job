@@ -1,12 +1,13 @@
 <%@tag import="model.User"%>
 <%@ tag description="header" pageEncoding="UTF-8"%>
-<%-- <%@attribute name="isLogin" required="false"%> --%>
+
 <%@attribute name="user" required="false"%>
 <%@attribute name="basePath" required="true"%>
 
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="f"%>
+
 <%
-Boolean isLogin = (user != null && user != "") ? true : false;
- User uo = (User) request.getSession().getAttribute("u");
+User uo = (User) request.getSession().getAttribute("u");
 %>
 
 <div class="container sticky-top mb-4">
@@ -16,7 +17,8 @@ Boolean isLogin = (user != null && user != "") ? true : false;
 				class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between">
 				<a href="${basePath}"
 					class="d-flex align-items-center col-md-3 mb-2 mb-md-0 text-dark text-decoration-none">
-					<img class="img-home" src="${basePath}assets/images/practicas-pre.png" />
+					<img class="img-home"
+					src="${basePath}assets/images/practicas-pre.png" />
 				</a>
 
 				<ul
@@ -24,7 +26,8 @@ Boolean isLogin = (user != null && user != "") ? true : false;
 					<li><a href="${basePath}" class="nav-link px-2 text-secondary">Inicio</a></li>
 					<li><a href="#" class="nav-link px-2 text-white">Publicar
 							ofertas</a></li>
-					<li><a href="${basePath}nosotros.jsp" class="nav-link px-2 text-white">Nosotros</a></li>
+					<li><a href="${basePath}nosotros.jsp"
+						class="nav-link px-2 text-white">Nosotros</a></li>
 				</ul>
 
 				<%if (uo == null) {%>
@@ -44,8 +47,11 @@ Boolean isLogin = (user != null && user != "") ? true : false;
 					<ul class="dropdown-menu text-small"
 						aria-labelledby="dropdownUser1">
 						<li><span class="dropdown-item">${u.email}</span></li>
-						<li><a class="dropdown-item" href="${basePath}profile">Perfil</a></li>
-						<li><a class="dropdown-item" href="#">Mis propuestas</a></li>
+						<li><a class="dropdown-item" href="${basePath}profile.jsp">Perfil</a></li>
+
+						<li><a class="dropdown-item"
+							href="mis-${u.isEmpresa == 1 ? 'propuestas' : 'postulaciones'}.jsp">
+								${u.isEmpresa == 1 ? 'Mis Propuestas' : 'Mis Postulaciones'}</a></li>
 						<li>
 							<hr class="dropdown-divider">
 						</li>

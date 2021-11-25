@@ -30,11 +30,10 @@ public class UserServlet extends HttpServlet {
 	 * @see HttpServlet#service(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */
-	
+
 	protected void service(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		System.out.println("Entró al Servlet Ususario");
-		
+
 		String btn = request.getParameter("button");
 		if (btn == null)
 			btn = "logout";
@@ -53,7 +52,6 @@ public class UserServlet extends HttpServlet {
 	}
 
 	private void login(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("Process: login");
 
 		String email, pass, url, message = "";
 
