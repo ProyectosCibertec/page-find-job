@@ -1,9 +1,13 @@
+<%@tag import="model.User"%>
 <%@ tag description="header" pageEncoding="UTF-8"%>
-<%-- <%@attribute name="isLogin" required="false"%> --%>
+
 <%@attribute name="user" required="false"%>
+<%@attribute name="basePath" required="true"%>
+
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="f"%>
 
 <%
-Boolean isLogin = (user != null && user != "") ? true : false;
+User uo = (User) request.getSession().getAttribute("u");
 %>
 
 <div class="container sticky-top mb-4">
@@ -11,20 +15,22 @@ Boolean isLogin = (user != null && user != "") ? true : false;
 		<div class="container">
 			<div
 				class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between">
-				<a href="index.jsp"
+				<a href="${basePath}"
 					class="d-flex align-items-center col-md-3 mb-2 mb-md-0 text-dark text-decoration-none">
-					<img class="img-home" src="assets/images/practicas-pre.png" />
+					<img class="img-home"
+					src="${basePath}assets/images/practicas-pre.png" />
 				</a>
 
 				<ul
 					class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
-					<li><a href="index.jsp" class="nav-link px-2 text-secondary">Inicio</a></li>
+					<li><a href="${basePath}" class="nav-link px-2 text-secondary">Inicio</a></li>
 					<li><a href="#" class="nav-link px-2 text-white">Publicar
 							ofertas</a></li>
-					<li><a href="nosotros.jsp" class="nav-link px-2 text-white">Nosotros</a></li>
+					<li><a href="${basePath}nosotros.jsp"
+						class="nav-link px-2 text-white">Nosotros</a></li>
 				</ul>
 
-				<%if (isLogin != true) {%>
+				<%if (uo == null) {%>
 
 				<div class="col-md-3 text-end">
 					<a href="sign-in.jsp" class="btn btn-outline-light me-2">Login</a>
@@ -40,13 +46,16 @@ Boolean isLogin = (user != null && user != "") ? true : false;
 					</a>
 					<ul class="dropdown-menu text-small"
 						aria-labelledby="dropdownUser1">
-						<li><a class="dropdown-item" href="#">New project...</a></li>
-						<li><a class="dropdown-item" href="#">Settings</a></li>
-						<li><a class="dropdown-item" href="#">${user}</a></li>
+						<li><span class="dropdown-item">${u.email}</span></li>
+						<li><a class="dropdown-item" href="${basePath}profile.jsp">Perfil</a></li>
+
+						<li><a class="dropdown-item"
+							href="mis-${u.isEmpresa == 1 ? 'propuestas' : 'postulaciones'}.jsp">
+								${u.isEmpresa == 1 ? 'Mis Propuestas' : 'Mis Postulaciones'}</a></li>
 						<li>
 							<hr class="dropdown-divider">
 						</li>
-						<li><a class="dropdown-item" href="#">Signs out</a></li>
+						<li><a class="dropdown-item" href="userServlet">Signs out</a></li>
 					</ul>
 				</div>
 				<%}%>

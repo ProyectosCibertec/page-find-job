@@ -7,7 +7,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import management.UserManagement;
+import dao.DAOFactory;
+import management.DAOUserMySQL;
 import model.User;
 
 /**
@@ -29,11 +30,13 @@ public class UserServlet extends HttpServlet {
 	 * @see HttpServlet#service(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */
+
 	protected void service(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		System.out.println("Entró al Servlet Ususario");
 
 		String btn = request.getParameter("button");
+		if (btn == null)
+			btn = "logout";
 
 		switch (btn) {
 		case "register":
@@ -43,29 +46,31 @@ public class UserServlet extends HttpServlet {
 			login(request, response);
 			break;
 		default:
-			throw new IllegalArgumentException("Unexpected value: ");
+			request.getSession().invalidate();
+			response.sendRedirect("sign-in.jsp");
 		}
 	}
 
 	private void login(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("Process: login");
 
-		String email, pass, url;
+		String email, pass, url, message = "";
 
 		email = request.getParameter("inputEmail") == null ? null : request.getParameter("inputEmail");
 		pass = request.getParameter("inputPassword") == null ? null : request.getParameter("inputPassword");
 
-		User u = new User();
+		DAOFactory factory = DAOFactory.getDAOFactory(DAOFactory.MYSQL);
+		User u = factory.getUserDAO().get(email, pass);
 
-		u = new UserManagement().get(email, pass);
+		u = new DAOUserMySQL().get(email, pass);
 
-		if (u == null) {
-			url = "sign-in.jsp";
-			System.out.println("No existen registro con '" + email + "' ni password '" + pass + "'");
-		} else {
+		if (u != null) {
 			url = "index.jsp";
+		} else {
+			url = "sign-in.jsp";
+			message = "Usuario o contraseña inválidos";
 		}
-		request.setAttribute("user", u);
+		request.getSession().setAttribute("u", u);
+		request.setAttribute("message", message);
 		request.getRequestDispatcher(url).forward(request, response);
 	}
 

@@ -8,7 +8,7 @@ import interfaces.UserInterface;
 import model.User;
 import utils.MySQLConnection;
 
-public class UserManagement implements UserInterface {
+public class DAOUserMySQL implements UserInterface {
 
 	@Override
 	public User get(String email, String password) {
@@ -31,8 +31,10 @@ public class UserManagement implements UserInterface {
 			result = pst.executeQuery();
 
 			if (result.next()) {
-				u = new User(result.getInt(1), result.getString(2), result.getString(3), result.getInt(4),
-						result.getInt(5), result.getString(6), result.getString(7));
+				u = new User(result.getInt(1), result.getString(2), result.getString(3), result.getString(4),
+						result.getString(5), result.getString(6), result.getString(7), result.getInt(8),
+						result.getInt(9), result.getInt(10), result.getString(11), result.getInt(12),
+						result.getString(13), result.getString(14));
 			}
 
 		} catch (Exception e) {

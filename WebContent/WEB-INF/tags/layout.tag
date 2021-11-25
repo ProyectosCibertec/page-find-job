@@ -4,8 +4,14 @@
 
 <%@attribute name="titlePage" required="false"%>
 <%@attribute name="css" required="false"%>
+<%@attribute name="cssExternal" required="false"%>
 <%@attribute name="header" required="false"%>
-<%@attribute name="user" required="false"%>
+
+<%
+String path = request.getContextPath();
+String basePath = request.getScheme()+"://" +request.getServerName()+":"+request.getServerPort()+path+"/" ;
+%>
+
 
 
 <!DOCTYPE html>
@@ -24,24 +30,28 @@ if (titlePage != null)
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
 	rel="stylesheet">
 
-
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/css/bootstrap-select.css" />
 
-<link rel="shortcut icon" href="assets/images/icons/favicon.svg"
+<link rel="shortcut icon" href="<%=basePath%>assets/images/icons/favicon.svg"
 	type="image/x-icon">
 
-<link rel="stylesheet" href="assets/sass_compiled/app.css">
+
+<%if (cssExternal != null) {%>
+<link rel="stylesheet" href="${cssExternal}">
+<%}%>
+
+<link rel="stylesheet" href="<%=basePath%>assets/css/app.css">
 
 <%if (css != null) {%>
-<link rel="stylesheet" href="assets/sass_compiled/${css}">
+<link rel="stylesheet" href="<%=basePath%>assets/css/${css}">
 <%}%>
+
 
 </head>
 <body>
 	<%if (header == null) {%>
-	<t:header user="${user}" />
-	<!-- isLogin="true"  -->
+	<t:header basePath="<%=basePath%>" />
 	<%}%>
 
 	<%-- Body --%>
