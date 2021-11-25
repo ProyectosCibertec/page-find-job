@@ -21,15 +21,14 @@ public class User {
 		this.email = email;
 		this.creationDate = creationDate;
 	}
-	
 
-	public User(String pasworrd, String email, String name, String lastname, String phone, String birthDate,
-			String address, String creationDate, String updateDate, int code, int active, int supperUser, int empresa,
-			int codePais) {
+	public User(String pasworrd, String email, String name, String lastName, String phone, String birthDate,
+			String address, String creationDate, String updateDate, int code, int active, int supperUser, int isEmpresa,
+			int paisId) {
 		this.pasworrd = pasworrd;
 		this.email = email;
 		this.name = name;
-		this.lastname = lastname;
+		this.lastName = lastName;
 		this.phone = phone;
 		this.birthDate = birthDate;
 		this.address = address;
@@ -38,8 +37,8 @@ public class User {
 		this.code = code;
 		this.active = active;
 		this.supperUser = supperUser;
-		this.empresa = empresa;
-		this.codePais = codePais;
+		this.isEmpresa = isEmpresa;
+		this.paisId = paisId;
 	}
 
 	public User(int code, String email, String pasworrd, String name, String lastName, String phone, String birthDate,
@@ -61,14 +60,6 @@ public class User {
 		this.isEmpresa = isEmpresa;
 	}
 
-	public int getPaisId() {
-		return paisId;
-	}
-
-	public void setPaisId(int paisId) {
-		this.paisId = paisId;
-	}
-
 	public String getName() {
 		return name;
 	}
@@ -83,54 +74,6 @@ public class User {
 
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
-	}
-
-	public String getBirthDate() {
-		return birthDate;
-	}
-
-	public void setBrithDate(String birthDate) {
-		this.birthDate = birthDate;
-	}
-
-	public String getPhone() {
-		return phone;
-	}
-
-	public void setPhone(String phone) {
-		this.phone = phone;
-	}
-
-	public String getAddress() {
-		return address;
-	}
-
-	public void setAddress(String address) {
-		this.address = address;
-	}
-
-	public int getIsEmpresa() {
-		return isEmpresa;
-	}
-
-	public void setIsEmpresa(int isEmpresa) {
-		this.isEmpresa = isEmpresa;
-	}
-
-	public int getSupperUser() {
-		return supperUser;
-	}
-
-	public void setSupperUser(int supperUser) {
-		this.supperUser = supperUser;
-	}
-
-	public int getCode() {
-		return code;
-	}
-
-	public void setCode(int code) {
-		this.code = code;
 	}
 
 	public String getPasworrd() {
@@ -165,28 +108,12 @@ public class User {
 		this.updateDate = updateDate;
 	}
 
-	public int getActive() {
-		return active;
+	public String getBirthDate() {
+		return birthDate;
 	}
 
-	public void setActive(int active) {
-		this.active = active;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public String getLastname() {
-		return lastname;
-	}
-
-	public void setLastname(String lastname) {
-		this.lastname = lastname;
+	public void setBirthDate(String birthDate) {
+		this.birthDate = birthDate;
 	}
 
 	public String getPhone() {
@@ -197,14 +124,6 @@ public class User {
 		this.phone = phone;
 	}
 
-	public String getBirthDate() {
-		return birthDate;
-	}
-
-	public void setBirthDate(String birthDate) {
-		this.birthDate = birthDate;
-	}
-
 	public String getAddress() {
 		return address;
 	}
@@ -213,20 +132,44 @@ public class User {
 		this.address = address;
 	}
 
-	public int getEmpresa() {
-		return empresa;
+	public int getCode() {
+		return code;
 	}
 
-	public void setEmpresa(int empresa) {
-		this.empresa = empresa;
+	public void setCode(int code) {
+		this.code = code;
 	}
 
-	public int getCodePais() {
-		return codePais;
+	public int getActive() {
+		return active;
 	}
 
-	public void setCodePais(int codePais) {
-		this.codePais = codePais;
+	public void setActive(int active) {
+		this.active = active;
+	}
+
+	public int getSupperUser() {
+		return supperUser;
+	}
+
+	public void setSupperUser(int supperUser) {
+		this.supperUser = supperUser;
+	}
+
+	public int getIsEmpresa() {
+		return isEmpresa;
+	}
+
+	public void setIsEmpresa(int isEmpresa) {
+		this.isEmpresa = isEmpresa;
+	}
+
+	public int getPaisId() {
+		return paisId;
+	}
+
+	public void setPaisId(int paisId) {
+		this.paisId = paisId;
 	}
 
 }
