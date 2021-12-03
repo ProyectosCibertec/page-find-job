@@ -21,6 +21,8 @@ public interface OfferInterface {
 	
 	public ArrayList<Offer> listByLanguage(String chain);
 	
+	public Offer listById(int code);
+	
 	public Offer getLastOffer();
 
 }

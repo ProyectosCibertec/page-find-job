@@ -5,8 +5,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 
-import javax.security.auth.callback.LanguageCallback;
-
 import interfaces.OfferInterface;
 import model.Language;
 import model.Offer;
@@ -116,9 +114,9 @@ public class DAOOfferMySQL implements OfferInterface {
 
 		try {
 			con = MySQLConnection.getConnection();
-			String sql = "{call usp_get_offer_by_title(?)}";
+			String sql = "{call usp_get_offer_by_title("+chain+")}";
+//			String sql = "call usp_demo('Python')";
 			pst = con.prepareStatement(sql);
-			pst.setString(1, chain);
 
 			result = pst.executeQuery(sql);
 
@@ -141,6 +139,7 @@ public class DAOOfferMySQL implements OfferInterface {
 
 	@Override
 	public ArrayList<Offer> listByLanguage(String chain) {
+		ArrayList<Offer> offerList = null;
 		
 		return null;
 	}
@@ -168,6 +167,37 @@ public class DAOOfferMySQL implements OfferInterface {
 
 		} catch (Exception e) {
 			System.out.println("Error al obtener ultima oferta : " + e.getMessage());
+		} finally {
+			MySQLConnection.closeConnection(con);
+		}
+
+		return o;
+	}
+
+	@Override
+	public Offer listById(int code) {
+		Offer o = null;
+		Connection con = null;
+		PreparedStatement pst = null;
+		ResultSet result = null;
+
+		try {
+			con = MySQLConnection.getConnection();
+//			String sql = "{call usp_get_offer_by_id(?)}";
+			String sql = "select * from offer where id = " + code;
+			pst = con.prepareStatement(sql);
+//			pst.setInt(1, code);
+			result = pst.executeQuery(sql);
+
+			o = new Offer();
+
+			if (result.next()) {
+				o = new Offer(result.getInt(1), result.getString(2), result.getString(3), result.getString(4),
+						result.getString(5), result.getString(6), result.getInt(7));
+			}
+
+		} catch (Exception e) {
+			System.out.println("Error al obtener oferta por id: " + e.getMessage());
 		} finally {
 			MySQLConnection.closeConnection(con);
 		}

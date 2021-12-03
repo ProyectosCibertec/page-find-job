@@ -38,10 +38,25 @@ public class OfferServlet extends HttpServlet {
 		case "buscar":
 			buscar(request, response);
 			break;
+		case "apply":
+			apply(request, response);
+			break;
 		default:
 			request.getSession().invalidate();
 			response.sendRedirect("sign-in.jsp");
 		}
+	}
+
+	private void apply(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		int offerId = Integer.parseInt(request.getParameter("inputOfferId"));
+		Offer o = new Offer();
+		System.out.println(offerId);
+		o = DAOFactory.getDAOFactory(DAOFactory.MYSQL).getOfferDAO().listById(offerId);
+		
+		System.out.println(o.toString());
+		
+		request.setAttribute("offer", o);
+		request.getRequestDispatcher("oferta.jsp").forward(request, response);
 	}
 
 	private void buscar(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
