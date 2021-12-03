@@ -1,8 +1,11 @@
 package management;
 
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 import interfaces.UserInterface;
 import model.User;
@@ -51,19 +54,25 @@ public class DAOUserMySQL implements UserInterface {
 		int result = 0;
 
 		Connection conn = null;
-		PreparedStatement pst = null;
+		CallableStatement cs = null;
 
 		try {
 			conn = MySQLConnection.getConnection();
-			String sql = "{call usp_insert_user(?,?,?)}";
+			String sql = "{call ups_register_user(?,?,?,?,?,?,?,?)}";
 
-			pst = conn.prepareStatement(sql);
+			cs = conn.prepareCall(sql);
 
-			pst.setString(1, u.getPasworrd());
-			pst.setString(2, u.getEmail());
-			pst.setString(3, u.getCreationDate());
+			cs.setString(1, u.getEmail());
+			cs.setString(2, u.getPasworrd());
+			cs.setString(3, u.getName());
+			cs.setString(4, u.getLastName());
+			cs.setString(5, u.getBirthDate());
+			cs.setInt(6, u.getIsEmpresa());
+			cs.setString(7, u.getCreationDate());
 
-			result = pst.executeUpdate();
+			result = cs.executeUpdate();
+
+			cs.getInt(8);
 
 		} catch (Exception e) {
 			System.out.println("Handle error -> register user : " + e.getMessage());
@@ -134,6 +143,43 @@ public class DAOUserMySQL implements UserInterface {
 		}
 
 		return u;
+	}
+
+	@Override
+	public int restorePassword(String email, String password) {
+
+		DateTimeFormatter date = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+		String currentDate = date.format(LocalDateTime.now());
+
+		int result = 0;
+
+		Connection con = null;
+		PreparedStatement pst = null;
+
+		try {
+			con = MySQLConnection.getConnection();
+			String sql = "UPDATE usuario SET password=?, update_date=? WHERE email=?";
+
+			pst = con.prepareStatement(sql);
+
+			pst.setString(1, email);
+			pst.setString(2, currentDate);
+			pst.setString(3, password);
+
+			result = pst.executeUpdate();
+
+		} catch (Exception e) {
+			System.out.println("Error al cambiar contraseña : " + e.getMessage());
+		} finally {
+			try {
+				if (pst != null || con != null)
+					con.close();
+			} catch (Exception e2) {
+				System.out.println("Error al cerrar: " + e2.getMessage());
+			}
+		}
+
+		return result;
 	}
 
 }

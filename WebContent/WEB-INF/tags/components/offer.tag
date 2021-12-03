@@ -48,6 +48,6 @@
 		</f:forEach>
 	</div>
 	<div class="col-2" style="text-align: right; margin: auto;">
-		<input type="button" class="btn btn-warning" value="APLICAR">
+		<input type="button" class="btn btn-warning" id="aplicar" value="APLICAR">
 	</div>
 </div>

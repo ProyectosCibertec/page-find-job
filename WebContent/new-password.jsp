@@ -6,7 +6,7 @@
 
 
 
-<t:layout titlePage="Login" css="login.css">
+<t:layout titlePage="Password restore" css="login.css">
 	<jsp:body>
 		<div class="container">
 		  <main class="form-signin flex-column">
@@ -16,38 +16,35 @@
 						src="https://getbootstrap.com//docs/5.1/assets/brand/bootstrap-logo.svg"
 						alt="" width="72" height="57">
 		    </div>
-			<div class='switch'>
-			  <input type='checkbox' checked>
-			</div>
 		    <form action="userServlet" method="POST">
-		      <h1 class="h3 mb-3 fw-normal">Iniciar sessión</h1>
+		      <h1 class="h3 mb-3 fw-normal">Cambiar contraseña</h1>
 		
 		      <div class="form-floating">
 		        <input type="email" class="form-control" id="inputEmail"
 							name="inputEmail" placeholder="name@example.com">
 		        <label for="inputEmail">Correo electrónico</label>
 		      </div>
+		      
 		      <div class="form-floating">
 		        <input type="password" class="form-control" id="inputPassword"
 							name="inputPassword" placeholder="Password">
-		        <label for="inputPassword">Contraseña</label>
+		        <label for="inputPassword">Nueva contraseña</label>
+		      </div>
+		      
+		      <div class="form-floating">
+		        <input type="password" class="form-control"
+							id="inputRetryPassword" name="inputRetryPassword"
+							placeholder="Password">
+		        <label for="inputRetryPassword">Repetir contraseña</label>
 		      </div>
 		
-		      <button name="button" value="login"
-						class="w-100 btn btn-lg btn-primary  mt-4" type="submit">Ingresar</button>
+		
+		      <button name="button" value="restore"
+						class="w-100 btn btn-lg btn-primary  mt-4" type="submit">Cambiar</button>
 		    </form>
 		  </main>
-
-		    <p class="small text-center text-gray-soft">
-				<a href="new-password.jsp">Olvidé mi contraseña</a>
-			</p>
-			<br>
-		    <p class="small text-center text-gray-soft">¿Aún no tienes cuenta? <a
-					href="register.jsp">Sign up</a>
-			</p>
 		</div>
 		<f:if test="${message != null}">
-		<div id="modal-message"></div>
 			<div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
 			  <div id="liveToast"
 					class="toast bg-danger ${message != null ? 'show' : 'hide' }"
@@ -70,7 +67,6 @@
              btn.addEventListener('click', e => {
               toast.classList.remove("show")
               toast.classList.add("hide")
-              document.getElementById('modal-message').innerHTML ='<f:remove var="message" scope="session" /> ';
             })
           })
         </script>

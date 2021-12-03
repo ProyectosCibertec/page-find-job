@@ -11,4 +11,6 @@ public interface UserInterface {
 	public int update(User u);
 
 	public User findByIdOrEmail(String param);
+
+	public int restorePassword(String email, String password);
 }

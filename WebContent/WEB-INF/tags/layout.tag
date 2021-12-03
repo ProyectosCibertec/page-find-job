@@ -9,7 +9,7 @@
 
 <%
 String path = request.getContextPath();
-String basePath = request.getScheme()+"://" +request.getServerName()+":"+request.getServerPort()+path+"/" ;
+String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + path + "/";
 %>
 
 
@@ -33,10 +33,11 @@ if (titlePage != null)
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/css/bootstrap-select.css" />
 
-<link rel="shortcut icon" href="<%=basePath%>assets/images/icons/favicon.svg"
-	type="image/x-icon">
+<link rel="shortcut icon"
+	href="<%=basePath%>assets/images/icons/favicon.svg" type="image/x-icon">
 
-
+<link rel="stylesheet"
+	href="<%=basePath%>assets/css/conf/inputs__format.css">
 <%if (cssExternal != null) {%>
 <link rel="stylesheet" href="${cssExternal}">
 <%}%>
@@ -64,8 +65,11 @@ if (titlePage != null)
 
 	<script
 		src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
 	<script
-		src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.bundle.min.js"></script>
+		src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+	<script
+		src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 	<script
 		src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/bootstrap-select.min.js"></script>
 

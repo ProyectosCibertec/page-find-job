@@ -18,6 +18,8 @@ import model.User;
 public class UserServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
+	DAOFactory factory = DAOFactory.getDAOFactory(DAOFactory.MYSQL);
+
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
@@ -45,10 +47,35 @@ public class UserServlet extends HttpServlet {
 		case "login":
 			login(request, response);
 			break;
+		case "restore":
+			restore(request, response);
 		default:
 			request.getSession().invalidate();
 			response.sendRedirect("sign-in.jsp");
 		}
+	}
+
+	private void restore(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		String email, pass, retryPass, url, message = "";
+
+		email = request.getParameter("inputEmail") == null ? null : request.getParameter("inputEmail");
+		pass = request.getParameter("inputPassword") == null ? null : request.getParameter("inputPassword");
+		retryPass = request.getParameter("inputPassword") == null ? null : request.getParameter("inputRetryPassword");
+
+		// To do
+		int ok = factory.getUserDAO().restorePassword(email, pass);
+
+		if (ok == 0) {
+			url = "login.jsp";
+		} else {
+			url = "new-password.jsp";
+			message = "Usuario o contraseña inválidos";
+		}
+		request.getSession().setAttribute("ok", ok);
+		request.setAttribute("message", message);
+		request.getRequestDispatcher(url).forward(request, response);
+
 	}
 
 	private void login(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -58,7 +85,6 @@ public class UserServlet extends HttpServlet {
 		email = request.getParameter("inputEmail") == null ? null : request.getParameter("inputEmail");
 		pass = request.getParameter("inputPassword") == null ? null : request.getParameter("inputPassword");
 
-		DAOFactory factory = DAOFactory.getDAOFactory(DAOFactory.MYSQL);
 		User u = factory.getUserDAO().get(email, pass);
 
 		u = new DAOUserMySQL().get(email, pass);
@@ -70,12 +96,40 @@ public class UserServlet extends HttpServlet {
 			message = "Usuario o contraseña inválidos";
 		}
 		request.getSession().setAttribute("u", u);
-		request.setAttribute("message", message);
-		request.getRequestDispatcher(url).forward(request, response);
+		request.getSession().setAttribute("message", message);
+//		request.getRequestDispatcher(url).forward(request, response);
+		response.sendRedirect(request.getHeader("Referer"));
 	}
 
-	private void register(HttpServletRequest request, HttpServletResponse response) {
-		System.out.println("Process: Register");
+	private void register(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		System.out.println("entraste a register \n");
+		String email, pass, retryPass, name, lastName, birthDate;
+		int ok = -1;
+
+		email = request.getParameter("inputEmail");
+		name = request.getParameter("inputName");
+		lastName = request.getParameter("inputLastName");
+		birthDate = request.getParameter("inputBirthDate");
+		pass = request.getParameter("inputPassword");
+		retryPass = request.getParameter("inputRetryPassword");
+
+		if (!pass.equals(retryPass)) {
+			response.sendRedirect(request.getHeader("Referer"));
+			return;
+		}
+
+		User u = new User(email, pass, name, lastName, birthDate, 0, birthDate);
+		ok = factory.getUserDAO().register(u);
+
+		request.getSession().setAttribute("ok", ok);
+
+		if (ok == 0) {
+			response.sendRedirect(request.getHeader("Referer"));
+			return;
+		}
+
+		request.getRequestDispatcher("register.jsp").forward(request, response);
 
 	}
 

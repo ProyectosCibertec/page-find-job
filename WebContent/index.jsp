@@ -30,7 +30,9 @@ pageContext.setAttribute("languageList", languageList);
 				</div>
 			</div>
 		</div>
-
+		
+		<h2>DEMO: ${demo}</h2>
+		
 		<div class="container mt-4">
 			<div class="row align-items-start w80">
 				<div class="relative col-sm-5 col-md-6" style="position: relative;"> <input
@@ -45,7 +47,7 @@ pageContext.setAttribute("languageList", languageList);
 					data-live-search="true" aria-label="Seleccionar">
 
 					<f:forEach var="l" items="${languageList}">
-						<option value="${l.name.toLowerCase()}">${l.name.toUpperCase()}</option>
+						<option value="${l.code}">${l.name.toUpperCase()}</option>
 					</f:forEach>
 
 				</select>
@@ -84,6 +86,15 @@ pageContext.setAttribute("languageList", languageList);
 			</div>
 		</div>
 		
+
     </jsp:body>
 
 </t:layout>
+
+
+
+
+
+
+
+

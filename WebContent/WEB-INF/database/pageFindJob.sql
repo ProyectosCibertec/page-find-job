@@ -17,9 +17,9 @@ CREATE TABLE usuario (
     name				VARCHAR(25)		NOT NULL,
     lastname			VARCHAR(255)	NOT NULL,
     phone				CHAR(11)		NULL,
-    birth_date			DATE			NULL,
-    active				INT				NOT NULL,
-    super_user			INT				NULL DEFAULT 0,
+    birth_date			DATE			NOT NULL,
+    active				INT				NOT NULL DEFAULT 0,
+    super_user			INT				NOT NULL DEFAULT 0,
     empresa				INT				NOT NULL,
     address				VARCHAR(200)	NULL,
     pais_id				INT				NULL,
@@ -108,7 +108,7 @@ ALTER TABLE usuario AUTO_INCREMENT = 1000;
 ALTER TABLE offer AUTO_INCREMENT = 1000;
 ALTER TABLE offer_languages AUTO_INCREMENT = 100;
 
--- inserts
+-- PROCEDURES
 
 DELIMiTER $$
 CREATE PROCEDURE usp_add_language (v_name varchar(50))
@@ -144,12 +144,39 @@ BEGIN
 END$$
 DELIMiTER ;
 
+DELIMITER $$
+CREATE PROCEDURE ups_register_user(
+	p_email			VARCHAR(50),
+    p_pass 			VARCHAR(50),
+    p_name 			VARCHAR(25),
+    p_lastname 		VARCHAR(255),
+    p_birth_date	DATE,
+    p_isEmpresa		INT,
+    p_crea_date		DATETIME,
+    OUT p_result 	INT
+)
+BEGIN
+	IF (SELECT count(*) FROM usuario WHERE email = p_email) > 0 THEN
+		SET p_result = 0;
+	ELSE 
+		BEGIN
+			INSERT INTO usuario VALUES (DEFAULT, p_email, p_pass, p_name, p_lastname, NULL, p_birth_date,
+								DEFAULT, DEFAULT, p_isEmpresa, NULL,NULL, p_crea_date, NULL);
+            SET p_result = 1;
+		END;        
+    END IF;
+END $$
+DELIMITER ;
+
+-- insert PAIS
+
+INSERT INTO pais VALUES(DEFAULT, 'Perú'),(DEFAULT, 'Argentina'),(DEFAULT, 'Bolivia'),(DEFAULT, 'Ecuador'),(DEFAULT, 'Venezuela'), (DEFAULT, 'Chile');
 
 -- insert USERS
 
-INSERT INTO usuario VALUES(default,'demo@demo.com', 1234, 'Demo1', 'Lastname Demo', '999999999', '2010-09-15', 1, 0 ,0, 'Av siempre viva','2010-09-15 17:14:12', null);
-INSERT INTO usuario VALUES(default,'demo2@demo.com', 1234, 'Demo2', 'Lastname Demo', '999999999', '2010-09-15', 1, 0 ,0, 'Av siempre viva','2010-09-15 17:14:12', null);
-INSERT INTO usuario VALUES(default,'demo3@demo.com', 1234, 'Demo3', 'Lastname Demo', '999999999', '2010-09-15', 1, 0 ,0, 'Av siempre viva','2010-09-15 17:14:12', null);
+INSERT INTO usuario VALUES(default,'demo@demo.com', '1234', 'Demo1', 'Lastname Demo', '999999999', '2010-09-15', default, 0 ,0, 'Av siempre viva',1,'2010-09-15 17:14:12', null);
+INSERT INTO usuario VALUES(default,'demo2@demo.com', 1234, 'Demo2', 'Lastname Demo', '999999999', '2010-09-15', 1, 0 ,0, 'Av siempre viva',1,'2010-09-15 17:14:12', null);
+INSERT INTO usuario VALUES(default,'demo3@demo.com', 1234, 'Demo3', 'Lastname Demo', '999999999', '2010-09-15', 1, 0 ,0, 'Av siempre viva',1,'2010-09-15 17:14:12', null);
 
 
 -- inserts LANGUAGES
