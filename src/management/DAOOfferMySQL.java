@@ -5,16 +5,56 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 
+import javax.security.auth.callback.LanguageCallback;
+
 import interfaces.OfferInterface;
+import model.Language;
 import model.Offer;
 import utils.MySQLConnection;
 
 public class DAOOfferMySQL implements OfferInterface {
 
 	@Override
-	public int register(Offer o) {
+	public int register(Offer o, ArrayList<Language> languages) {
+		int rs = 0;
+		Connection con = null;
+		PreparedStatement pst1 = null;
+		PreparedStatement pst2 = null;
+		PreparedStatement pst3 = null;
+		try {
+			con = MySQLConnection.getConnection();
+			con.setAutoCommit(false);
+			String query1 = "insert into offer values (?,?,?,?,curdate(),null,?)";
+			pst1 = con.prepareStatement(query1);
+		
+			pst1.setInt(1, o.getCode());
+			pst1.setString(2, o.getTitle());
+			pst1.setString(3, o.getDescription());
+			pst1.setString(4, o.getLimitDate());
+			pst1.setInt(5, o.getVacants());
+			
+			rs = pst1.executeUpdate();
+			
+			String query2 = "call usp_add_offer_language(?,?)";
+			
+			for (Language l : languages) {
+				pst3 = con.prepareStatement(query2);
+				pst3.setInt(1, o.getCode());
+				pst3.setInt(2, l.getCode());
+				
+				rs += pst3.executeUpdate();
+			}
+			
+			con.commit();
+			
+			
+		} catch (Exception e) {
+			System.out.println("Error al registrar oferta: " + e.getMessage());
+		} finally {
+			MySQLConnection.closeConnection(con);
+		}
 		// TODO Auto-generated method stub
-		return 0;
+		return rs;
 	}
 
 	@Override
@@ -65,6 +105,74 @@ public class DAOOfferMySQL implements OfferInterface {
 		}
 
 		return list;
+	}
+	
+	public ArrayList<Offer> listByTitle(String chain) {
+		ArrayList<Offer> list = null;
+
+		Connection con = null;
+		PreparedStatement pst = null;
+		ResultSet result = null;
+
+		try {
+			con = MySQLConnection.getConnection();
+			String sql = "{call usp_get_offer_by_title(?)}";
+			pst = con.prepareStatement(sql);
+			pst.setString(1, chain);
+
+			result = pst.executeQuery(sql);
+
+			list = new ArrayList<Offer>();
+
+			while (result.next()) {
+				Offer o = new Offer(result.getInt(1), result.getString(2), result.getString(3), result.getString(4),
+						result.getString(5), result.getString(6), result.getInt(7));
+				list.add(o);
+			}
+
+		} catch (Exception e) {
+			System.out.println("Error al listar las ofertas por titulo : " + e.getMessage());
+		} finally {
+			MySQLConnection.closeConnection(con);
+		}
+
+		return list;
+	}
+
+	@Override
+	public ArrayList<Offer> listByLanguage(String chain) {
+		
+		return null;
+	}
+
+	@Override
+	public Offer getLastOffer() {
+		Offer o = null;
+		Connection con = null;
+		PreparedStatement pst = null;
+		ResultSet result = null;
+
+		try {
+			con = MySQLConnection.getConnection();
+			String sql = "{call usp_get_last_offer()}";
+			pst = con.prepareStatement(sql);
+
+			result = pst.executeQuery(sql);
+
+			o = new Offer();
+
+			if (result.next()) {
+				o = new Offer(result.getInt(1), result.getString(2), result.getString(3), result.getString(4),
+						result.getString(5), result.getString(6), result.getInt(7));
+			}
+
+		} catch (Exception e) {
+			System.out.println("Error al obtener ultima oferta : " + e.getMessage());
+		} finally {
+			MySQLConnection.closeConnection(con);
+		}
+
+		return o;
 	}
 
 }

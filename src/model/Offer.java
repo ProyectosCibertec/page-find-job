@@ -10,6 +10,8 @@ public class Offer {
 		return "Offer [code=" + code + ", vacants=" + vacants + ", title=" + title + ", description=" + description
 				+ ", limitDate=" + limitDate + ", createDate=" + createDate + ", updateDate=" + updateDate + "]";
 	}
+	
+	public Offer() {}
 
 	public Offer(int code, String title, String description, String limitDate, String createDate, String updateDate,
 			int vacants) {
