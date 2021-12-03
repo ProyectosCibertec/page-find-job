@@ -26,16 +26,16 @@ pageContext.setAttribute("languageList", languageList);
 				<img class="d-block w-100 border-radius-125"
 					src="assets/images/banners/banner.jpg" alt="First slide">
 				<div class="banner-content">
-					<h1>Consigue tus primeras prácticas</h1>
+					<h1>Consigue tus primeras practicas</h1>
 				</div>
 			</div>
 		</div>
 
-		<div class="container mt-4">
+		<form class="container mt-4" action="offerServlet" method="POST">
 			<div class="row align-items-start w80">
 				<div class="relative col-sm-5 col-md-6" style="position: relative;"> <input
-						class="form-control" type="search" placeholder="Buscar"
-						aria-label="default input example" style="padding-left: 40px">
+						id="search" class="form-control" type="search" placeholder="Buscar"
+						aria-label="default input example" style="padding-left: 40px" name="inputSearch">
 					 <div class="absolute top-4 right-3"
 						style="position: absolute; top: 50%; transform: translateY(-50%); left: 30px;">
 					 	<i class="fa fa-search text-gray-400 z-20 hover:text-gray-500"></i>
@@ -45,22 +45,31 @@ pageContext.setAttribute("languageList", languageList);
 					data-live-search="true" aria-label="Seleccionar">
 
 					<f:forEach var="l" items="${languageList}">
-						<option value="${l.name.toLowerCase()}">${l.name.toUpperCase()}</option>
+						<option value="${l.code}">${l.name.toUpperCase()}</option>
 					</f:forEach>
 
 				</select>
 				<div class="col-auto">
-					<input type="button" class="btn btn-primary" value="BUSCAR">
+					<button type="submit" class="btn btn-primary" name="button" value="buscar" >BUSCAR</button>
 				</div>
 			</div>
-		</div>
+		</form>
 		<div class="container mt-4">
-			<div class="content w80" style="padding: 0 12px">		
-				<f:forEach var="ol" items="${offerList}">
-					<c:offer title="${ol.title}" description="${ol.description}"
+			<div class="content w80" style="padding: 0 12px">	
+				<f:if test="${newOfferList == null}">
+					<f:forEach var="ol" items="${offerList}">
+						<c:offer title="${ol.title}" description="${ol.description}"
 						expires="${ol.limitDate}" vacant="${ol.vacants}"
 						offerId="${ol.code}" />
-				</f:forEach>
+					</f:forEach>
+				</f:if>	
+				<f:if test="${newOfferList != null}">
+					<f:forEach var="ol" items="${newOfferList}">
+						<c:offer title="${ol.title}" description="${ol.description}"
+						expires="${ol.limitDate}" vacant="${ol.vacants}"
+						offerId="${ol.code}" />
+					</f:forEach>
+				</f:if>
 			</div>
 		</div>
 		
@@ -83,7 +92,13 @@ pageContext.setAttribute("languageList", languageList);
 				</nav>
 			</div>
 		</div>
-		
+<%-- 		<script>
+			const search = document.querySelector('#search');
+			search.addEventListener('input', e  => {
+				console.log(e.target.value)
+				<%ArrayList<Offer> newOfferList = factory.getOfferDAO().listByTitle(e.target.value); %>
+			})
+        </script>  --%>
     </jsp:body>
 
 </t:layout>

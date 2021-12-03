@@ -65,14 +65,18 @@ pageContext.setAttribute("languageList", languageList);
   							  		</div>
   							  		<button name="button" value="add" style="border-radius: 50%; width: 40; height: 40; align-self: flex-end" 
   							  		class="btn btn-primary" type="submit"><i class="fa fa-plus"></i></button>
+  							  		 <f:if test="${ languagesOfferList != null}">
+							 			<button name="button" value="remove"
+  							  		 	class="btn btn-link col-md-2 text-danger" type="submit" style="align-self: flex-end">Limpiar lenguajes</button>
+							 		</f:if>
   							  </div>
-  							  <div class="col-8 m-auto">
+  							  <div class="col-8 mx-auto mb-4">
   							  	<f:forEach var="l" items="${languagesOfferList}">
 									<c:tag language="${l.name}" />
 							 	</f:forEach>
 							  </div>
 		      				  <button name="button" value="register"
-						      class="w-20 btn btn-md btn-primary" type="submit">Registrar</button>
+						      class="w-22 btn btn-md btn-primary"  type="submit">Registrar</button>
 		    			</form>
 					</div>
 				</div>
@@ -95,16 +99,6 @@ pageContext.setAttribute("languageList", languageList);
 			    </div>
 			  </div>
 			</div>
-		  <script>
-		  document.addEventListener('DOMContentLoaded', () => {
-            const btn = document.querySelector('.btn-close')
-            const toast = document.querySelector('.toast')
-             btn.addEventListener('click', e => {
-              toast.classList.remove("show")
-              toast.classList.add("hide")
-            })
-          })
-        </script>
 		  </f:if>
     </jsp:body>
 </t:layout>

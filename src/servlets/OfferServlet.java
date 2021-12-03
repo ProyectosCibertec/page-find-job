@@ -32,10 +32,46 @@ public class OfferServlet extends HttpServlet {
 		case "register":
 			register(request, response);
 			break;
+		case "remove":
+			remove(request, response);
+			break;
+		case "buscar":
+			buscar(request, response);
+			break;
 		default:
 			request.getSession().invalidate();
 			response.sendRedirect("sign-in.jsp");
 		}
+	}
+
+	private void buscar(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String search = request.getParameter("inputSearch");
+		DAOFactory factory = DAOFactory.getDAOFactory(DAOFactory.MYSQL);
+		ArrayList<Offer> offerList = new ArrayList<Offer>();
+		
+		if(search != null && !search.isEmpty()) {
+			offerList = factory.getOfferDAO().listByTitle(search);
+			request.setAttribute("newOfferList", offerList);
+		}
+		
+		request.getRequestDispatcher("index.jsp").forward(request, response);
+	}
+
+	private void remove(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		ArrayList<Language> languagesOfferList = new ArrayList<>();
+		
+		String title = request.getParameter("inputTitle");
+		String descripcion = request.getParameter("inputDescripcion");
+		String vacantesString = request.getParameter("inputVacantes");
+		String fecha = request.getParameter("inputFecha");
+		
+		request.setAttribute("title", title);
+		request.setAttribute("descripcion", descripcion);
+		request.setAttribute("vacantes", vacantesString);
+		request.setAttribute("fecha", fecha);
+		request.getSession().setAttribute("languagesOfferList", languagesOfferList);
+		request.getRequestDispatcher("publicar-ofertas.jsp").forward(request, response);
 	}
 
 	@SuppressWarnings("unchecked")
