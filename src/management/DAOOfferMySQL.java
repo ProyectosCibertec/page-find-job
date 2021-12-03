@@ -13,7 +13,7 @@ import utils.MySQLConnection;
 public class DAOOfferMySQL implements OfferInterface {
 
 	@Override
-	public int register(Offer o, ArrayList<Language> languages) {
+	public int register(int userId, Offer o, ArrayList<Language> languages) {
 		int rs = 0;
 		Connection con = null;
 		PreparedStatement pst1 = null;
@@ -36,12 +36,21 @@ public class DAOOfferMySQL implements OfferInterface {
 			String query2 = "call usp_add_offer_language(?,?)";
 			
 			for (Language l : languages) {
-				pst3 = con.prepareStatement(query2);
-				pst3.setInt(1, o.getCode());
-				pst3.setInt(2, l.getCode());
+				pst2 = con.prepareStatement(query2);
+				pst2.setInt(1, o.getCode());
+				pst2.setInt(2, l.getCode());
 				
-				rs += pst3.executeUpdate();
+				rs += pst2.executeUpdate();
 			}
+			
+			String query3 = "insert into empresa_offer values (null,?,?)";
+			
+			pst3 = con.prepareStatement(query3);
+			
+			pst3.setInt(1, userId);
+			pst3.setInt(2, o.getCode());
+			
+			rs += pst3.executeUpdate();
 			
 			con.commit();
 			
@@ -114,10 +123,10 @@ public class DAOOfferMySQL implements OfferInterface {
 
 		try {
 			con = MySQLConnection.getConnection();
-			String sql = "{call usp_get_offer_by_title("+chain+")}";
-//			String sql = "call usp_demo('Python')";
+//			String sql = "select * from offer o where o.title like (%" + chain +"%)";
+			String sql = "call usp_get_offer_by_title(?)";
 			pst = con.prepareStatement(sql);
-
+			pst.setString(1, chain);
 			result = pst.executeQuery(sql);
 
 			list = new ArrayList<Offer>();

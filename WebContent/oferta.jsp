@@ -57,13 +57,13 @@ request.setAttribute("offerLanguageList", offerLanguageList);
 											</div>
 										</div>
 							</div>
-							<div class="col">
+							<div class="col px-5">
 								<h4>Descripcion</h4>
 								<p class="">${offer.description}</p>
 							</div>
 							<form method="POST" action="offerUserServlet" class="text-center">
 								<input type="text" name="inputOfferId" value="${offer.code}" hidden="true">
-								<button type="submit" class="btn btn-warning" name="inputOfferId" value="applyOffer">Aplicar</button>
+								<button type="submit" class="btn btn-warning" name="button" value="applyOffer">Aplicar</button>
 							</form>
 						</div>
 					</div>

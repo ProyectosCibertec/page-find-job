@@ -7,7 +7,7 @@ import model.Offer;
 
 public interface OfferInterface {
 
-	public int register(Offer o, ArrayList<Language> languages);
+	public int register(int userId, Offer o, ArrayList<Language> languages);
 	
 	public int update(Offer o);
 	

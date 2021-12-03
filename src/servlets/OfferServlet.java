@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import dao.DAOFactory;
 import model.Language;
 import model.Offer;
+import model.User;
 
 /**
  * Servlet implementation class OfferServlet
@@ -50,10 +51,8 @@ public class OfferServlet extends HttpServlet {
 	private void apply(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int offerId = Integer.parseInt(request.getParameter("inputOfferId"));
 		Offer o = new Offer();
-		System.out.println(offerId);
+
 		o = DAOFactory.getDAOFactory(DAOFactory.MYSQL).getOfferDAO().listById(offerId);
-		
-		System.out.println(o.toString());
 		
 		request.setAttribute("offer", o);
 		request.getRequestDispatcher("oferta.jsp").forward(request, response);
@@ -96,6 +95,8 @@ public class OfferServlet extends HttpServlet {
 		String message = null, url = "publicar-ofertas.jsp", title, descripcion, vacantesString, fecha;
 		ArrayList<Language> languagesOfferList = (ArrayList<Language>) request.getSession().getAttribute("languagesOfferList");
 		
+		User user = (User)request.getSession().getAttribute("u");
+		
 		title = request.getParameter("inputTitle");
 		descripcion = request.getParameter("inputDescripcion");
 		vacantesString = request.getParameter("inputVacantes");
@@ -115,7 +116,7 @@ public class OfferServlet extends HttpServlet {
 			o.setDescription(descripcion);
 			o.setLimitDate(fecha);
 			o.setVacants(Integer.parseInt(vacantesString));
-			int rs = DAOFactory.getDAOFactory(DAOFactory.MYSQL).getOfferDAO().register(o, languagesOfferList);
+			int rs = DAOFactory.getDAOFactory(DAOFactory.MYSQL).getOfferDAO().register(user.getCode(), o, languagesOfferList);
 			if(rs <= 0) {
 				message = "Hubo un error al registrar la oferta";
 			} else {
