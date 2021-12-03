@@ -84,6 +84,7 @@ pageContext.setAttribute("languageList", languageList);
 		  </main>
 		</div>
 		<f:if test="${message != null}">
+			<div id="modal-message"></div>
 			<div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
 			  <div id="liveToast"
 					class="toast bg-danger ${message != null ? 'show' : 'hide' }"
@@ -99,6 +100,17 @@ pageContext.setAttribute("languageList", languageList);
 			    </div>
 			  </div>
 			</div>
+			  <script>
+				document.addEventListener('DOMContentLoaded', () => {
+				    const btn = document.querySelector('.btn-close')
+				    const toast = document.querySelector('.toast')
+				     btn.addEventListener('click', e => {
+				      toast.classList.remove("show")
+				      toast.classList.add("hide")
+				      document.getElementById('modal-message').innerHTML ='<f:remove var="message" scope="session" /> ';
+				    })
+				  })
+	        </script>
 		  </f:if>
     </jsp:body>
 </t:layout>

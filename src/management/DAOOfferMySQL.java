@@ -5,7 +5,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 
-import javax.security.auth.callback.LanguageCallback;
 
 import interfaces.OfferInterface;
 import model.Language;
@@ -19,7 +18,6 @@ public class DAOOfferMySQL implements OfferInterface {
 		int rs = 0;
 		Connection con = null;
 		PreparedStatement pst1 = null;
-		PreparedStatement pst2 = null;
 		PreparedStatement pst3 = null;
 		try {
 			con = MySQLConnection.getConnection();
@@ -116,7 +114,7 @@ public class DAOOfferMySQL implements OfferInterface {
 
 		try {
 			con = MySQLConnection.getConnection();
-			String sql = "{call usp_get_offer_by_title(?)}";
+			String sql = "select * from offer title = ?";
 			pst = con.prepareStatement(sql);
 			pst.setString(1, chain);
 
