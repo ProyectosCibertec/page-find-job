@@ -33,17 +33,17 @@
 		        <label for="inputPassword">Contraseña</label>
 		      </div>
 		
-		      <!-- <div class="checkbox mb-3">
-		        <label>
-		          <input type="checkbox" value="remember-me"> Recuérdame
-		        </label>
-		      </div> -->
 		      <button name="button" value="login"
-						class="w-100 btn btn-lg btn-primary" type="submit">Ingresar</button>
+						class="w-100 btn btn-lg btn-primary  mt-4" type="submit">Ingresar</button>
 		    </form>
 		  </main>
+
+		    <p class="small text-center text-gray-soft">
+				<a href="new-password.jsp">Olvidé mi contraseña</a>
+			</p>
+			<br>
 		    <p class="small text-center text-gray-soft">¿Aún no tienes cuenta? <a
-					href="#">Sign up</a>
+					href="register.jsp">Sign up</a>
 			</p>
 		</div>
 		<f:if test="${message != null}">

@@ -17,6 +17,7 @@ public class DAOOfferMySQL implements OfferInterface {
 		int rs = 0;
 		Connection con = null;
 		PreparedStatement pst1 = null;
+		PreparedStatement pst2 = null;
 		PreparedStatement pst3 = null;
 		try {
 			con = MySQLConnection.getConnection();
@@ -33,7 +34,7 @@ public class DAOOfferMySQL implements OfferInterface {
 			rs = pst1.executeUpdate();
 			
 			String query2 = "call usp_add_offer_language(?,?)";
-			
+			pst2 = con.prepareStatement(query2);
 			for (Language l : languages) {
 				pst2 = con.prepareStatement(query2);
 				pst2.setInt(1, o.getCode());

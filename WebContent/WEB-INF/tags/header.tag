@@ -34,7 +34,7 @@ User uo = (User) request.getSession().getAttribute("u");
 
 				<div class="col-md-3 text-end">
 					<a href="sign-in.jsp" class="btn btn-outline-light me-2">Login</a>
-					<a href="#" class="btn btn-warning">Sign-up</a>
+					<a href="register.jsp" class="btn btn-warning">Sign-up</a>
 				</div>
 				<%} else {%>
 				<div class="dropdown text-end">

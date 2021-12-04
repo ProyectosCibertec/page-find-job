@@ -1,0 +1,137 @@
+@charset "UTF-8";
+
+form input[type="email"] {
+	margin-bottom: -1px;
+	border-bottom-right-radius: 0;
+	border-bottom-left-radius: 0;
+}
+
+form input[type="password"] {
+	margin-bottom: 10px;
+	border-top-left-radius: 0;
+	border-top-right-radius: 0;
+}
+
+/* checked */
+.switch>input[type=checkbox] {
+	position: relative;
+	display: inline-block;
+	-webkit-appearance: none;
+	-webkit-tap-highlight-color: transparent;
+	height: 60px;
+	width: 300px;
+	font-size: 2em;
+	border-radius: 20px;
+	background-color: rgb(237, 123, 56);
+	border-color: transparent;
+	background-clip: padding-box;
+	color: #E2E5E5;
+	vertical-align: middle;
+}
+
+.switch>input[type=checkbox]::before {
+	content: "";
+	position: absolute;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	right: 50%;
+	background-color: white;
+	border-radius: 20px;
+	border: 0.125em solid transparent;
+	background-clip: padding-box;
+	transform-origin: right center;
+	transform: translateZ(0);
+	-webkit-backface-visibility: hidden;
+	backface-visibility: hidden;
+	-webkit-animation: switch-off-transform 0.25s ease-out forwards;
+	animation: switch-off-transform 0.25s ease-out forwards;
+	z-index: 2;
+}
+
+.switch>input[type=checkbox]::after {
+	position: absolute;
+	left: 0.5em;
+	top: 0.4em;
+	line-height: 2;
+	font-size: 23px;
+	font-weight: bold;
+	font-family: "Helvetica Neue";
+	text-transform: uppercase;
+	content: "Usuario Empresa";
+	letter-spacing: 0;
+	word-spacing: 50px;
+	z-index: 1;
+}
+
+.switch>input[type=checkbox]:focus {
+	color: white;
+	border-color: transparent;
+	outline: none;
+}
+
+.switch>input[type=checkbox]:checked {
+	color: white;
+	/* background-color: rgb(74, 185, 231); */
+	background-color: #212529;
+	border-color: transparent;
+}
+
+.switch>input[type=checkbox]:checked::before {
+	transform-origin: left center;
+	-webkit-animation: switch-on-transform 0.25s ease-out forwards;
+	animation: switch-on-transform 0.25s ease-out forwards;
+}
+
+.switch {
+	display: inline-block;
+	transform: scale(0.5);
+	margin: 1.5em 0;
+}
+
+
+@-webkit-keyframes switch-on-transform {
+  0% {
+    transform: translateX(0) scaleX(1) translateZ(0);
+  }
+  25% {
+    transform: translateX(0) scaleX(1.33) translateZ(0);
+  }
+  100% {
+    transform: translateX(100%) scaleX(1) translateZ(0);
+  }
+}
+
+@keyframes switch-on-transform {
+  0% {
+    transform: translateX(0) scaleX(1) translateZ(0);
+  }
+  25% {
+    transform: translateX(0) scaleX(1.33) translateZ(0);
+  }
+  100% {
+    transform: translateX(100%) scaleX(1) translateZ(0);
+  }
+}
+@-webkit-keyframes switch-off-transform {
+  0% {
+    transform: translateX(100%) scaleX(1) translateZ(0);
+  }
+  25% {
+    transform: translateX(100%) scaleX(1.33) translateZ(0);
+  }
+  100% {
+    transform: translateX(0) scaleX(1) translateZ(0);
+  }
+}
+@keyframes switch-off-transform {
+  0% {
+    transform: translateX(100%) scaleX(1) translateZ(0);
+  }
+  25% {
+    transform: translateX(100%) scaleX(1.33) translateZ(0);
+  }
+  100% {
+    transform: translateX(0) scaleX(1) translateZ(0);
+  }
+}

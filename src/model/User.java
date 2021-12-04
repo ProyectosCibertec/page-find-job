@@ -16,10 +16,21 @@ public class User {
 	public User() {
 	}
 
+	public User(String email, String pasworrd, String name, String lastName, String birthDate, int isEmpresa,
+			String creationDate) {
+		this.email = email;
+		this.pasworrd = pasworrd;
+		this.name = name;
+		this.lastName = lastName;
+		this.birthDate = birthDate;
+		this.isEmpresa = isEmpresa;
+		this.creationDate = creationDate;
+	}
+
 	public User(String pasworrd, String email, String creationDate) {
 		this.pasworrd = pasworrd;
 		this.email = email;
-		this.creationDate = creationDate;
+		this.creationDate = creationDate; 
 	}
 
 	public User(String pasworrd, String email, String name, String lastName, String phone, String birthDate,

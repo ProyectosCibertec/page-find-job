@@ -1,0 +1,33 @@
+@charset "UTF-8";
+
+#registration-form {
+	max-width: 800px;
+	margin: 120px auto;
+}
+
+#registration-form .image {
+	float: left;
+	background-image: url("../images/banners/desk.jpg");
+	height: 550px;
+	width: 50%;
+	background-size: cover;
+	background-position: 25%;
+}
+
+#registration-form .frm {
+	float: right;
+	height: 550px;
+	width: 50%;
+	min-width: 250px;
+	padding: 0 35px;
+	background-size: 100% 100%;
+	background-color: white;
+}
+
+#registration-form h1 {
+	margin-bottom: 20px;
+}
+
+.form-floating {
+	margin: 10px 0;
+}

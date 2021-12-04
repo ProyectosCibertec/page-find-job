@@ -1,7 +1,7 @@
 @charset "UTF-8";
 
 .form-signin {
-	height: 90vh;
+	height: 70vh;
 	width: 100%;
 	max-width: 330px;
 	padding: 15px;
@@ -20,6 +20,7 @@
 	z-index: 2;
 }
 
+/* 
 .form-signin input[type="email"] {
 	margin-bottom: -1px;
 	border-bottom-right-radius: 0;
@@ -32,7 +33,7 @@
 	border-top-right-radius: 0;
 }
 
-/* checked */
+checked
 .switch>input[type=checkbox] {
   position: relative;
   display: inline-block;
@@ -88,7 +89,7 @@
 }
 .switch>input[type=checkbox]:checked {
   color: white;
-  /* background-color: rgb(74, 185, 231); */
+  background-color: rgb(74, 185, 231);
   background-color: #212529;
   border-color: transparent;
 }
@@ -148,4 +149,4 @@
   100% {
     transform: translateX(0) scaleX(1) translateZ(0);
   }
-}
+} */
