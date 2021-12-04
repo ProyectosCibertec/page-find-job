@@ -40,16 +40,16 @@ public class DAOOfferLanguageMySQL implements OfferLanguageInterface {
 		try {
 			con = MySQLConnection.getConnection();
 
-			int id = Integer.parseInt(code);
+//			int id = Integer.parseInt(code);
 
 			String sql = "{CALL usp_list_language_by_offer(?)}";
 			pst = con.prepareStatement(sql);
 
-			//pst.setInt(1, id);
+			// pst.setInt(1, id);
 			pst.setString(1, code);
 
 			result = pst.executeQuery();
-			
+
 			while (result.next()) {
 				OfferLanguage ol = new OfferLanguage();
 				ol.setCode(result.getInt(1));

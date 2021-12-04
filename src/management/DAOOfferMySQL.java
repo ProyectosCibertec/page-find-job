@@ -24,37 +24,36 @@ public class DAOOfferMySQL implements OfferInterface {
 			con.setAutoCommit(false);
 			String query1 = "insert into offer values (?,?,?,?,curdate(),null,?)";
 			pst1 = con.prepareStatement(query1);
-		
+
 			pst1.setInt(1, o.getCode());
 			pst1.setString(2, o.getTitle());
 			pst1.setString(3, o.getDescription());
 			pst1.setString(4, o.getLimitDate());
 			pst1.setInt(5, o.getVacants());
-			
+
 			rs = pst1.executeUpdate();
-			
+
 			String query2 = "call usp_add_offer_language(?,?)";
 			pst2 = con.prepareStatement(query2);
 			for (Language l : languages) {
 				pst2 = con.prepareStatement(query2);
 				pst2.setInt(1, o.getCode());
 				pst2.setInt(2, l.getCode());
-				
+
 				rs += pst2.executeUpdate();
 			}
-			
+
 			String query3 = "insert into empresa_offer values (null,?,?)";
-			
+
 			pst3 = con.prepareStatement(query3);
-			
+
 			pst3.setInt(1, userId);
 			pst3.setInt(2, o.getCode());
-			
+
 			rs += pst3.executeUpdate();
-			
+
 			con.commit();
-			
-			
+
 		} catch (Exception e) {
 			System.out.println("Error al registrar oferta: " + e.getMessage());
 		} finally {
@@ -113,7 +112,7 @@ public class DAOOfferMySQL implements OfferInterface {
 
 		return list;
 	}
-	
+
 	public ArrayList<Offer> listByTitle(String chain) {
 		ArrayList<Offer> list = null;
 
@@ -149,7 +148,7 @@ public class DAOOfferMySQL implements OfferInterface {
 	@Override
 	public ArrayList<Offer> listByLanguage(String chain) {
 		ArrayList<Offer> offerList = null;
-		
+
 		return null;
 	}
 
@@ -212,6 +211,41 @@ public class DAOOfferMySQL implements OfferInterface {
 		}
 
 		return o;
+	}
+
+	@Override
+	public ArrayList<Offer> listByOfferByUser(int codeUser, int isEmpresa) {
+		ArrayList<Offer> list = null;
+
+		Connection con = null;
+		PreparedStatement pst = null;
+		ResultSet result = null;
+
+		try {
+			con = MySQLConnection.getConnection();
+			String sql = "{call usp_list_offer_by_usuario(?,?)}";
+			pst = con.prepareStatement(sql);
+
+			pst.setInt(1, codeUser);
+			pst.setInt(2, isEmpresa);
+
+			result = pst.executeQuery(sql);
+
+			list = new ArrayList<Offer>();
+
+			while (result.next()) {
+				Offer o = new Offer(result.getInt(1), result.getString(2), result.getString(3), result.getString(4),
+						result.getString(5), result.getString(6), result.getInt(7));
+				list.add(o);
+			}
+
+		} catch (Exception e) {
+			System.out.println("Error al listar las ofertas por id usuario : " + e.getMessage());
+		} finally {
+			MySQLConnection.closeConnection(con);
+		}
+
+		return list;
 	}
 
 }

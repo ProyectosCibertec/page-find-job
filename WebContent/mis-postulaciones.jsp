@@ -14,7 +14,7 @@
 	<f:redirect url="/sign-in.jsp" />
 </f:if>
 
-<t:layout titlePage="Mis-Postulaciones" css="postulacion.css"
+<t:layout titlePage="Mis Postulaciones" css="postulacion.css"
 	cssExternal="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css">
 	<jsp:body>
 		<div class="container">

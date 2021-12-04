@@ -627,6 +627,12 @@ call usp_add_offer_language(1019,23);
 call usp_add_offer_language(1004,21);
 call usp_add_offer_language(1014,21);
 
+-- INSERT - RELACIÓN OFERTA - USUARIO
+INSERT INTO empresa_offer VALUES(DEFAULT, 1000, 1002),(DEFAULT, 1000,  1010),(DEFAULT, 1000,  1002),(DEFAULT, 1000,  1020),(DEFAULT, 1000,  1014),(DEFAULT, 1000,  1001);
+INSERT INTO postulant_offer VALUES(DEFAULT, 1001, 1002),(DEFAULT, 1001,  1010),(DEFAULT, 1002,  1002),(DEFAULT, 1001,  1020),(DEFAULT, 1002,  1014),(DEFAULT, 1002,  1001);
+
+
+-- PROCEDURE
 DELIMiTER $$
 CREATE PROCEDURE usp_list_language_by_offer(v_offer_id INT)
 BEGIN
@@ -682,3 +688,35 @@ SELECT * FROM offer;
 SELECT * FROM languages;
 
 Select * from usuario;
+
+-- PROC LISTAR OFERTAS DE UNA EMPRESA
+DELIMiTER $$
+CREATE PROCEDURE usp_list_offer_by_usuario(p_codeUser INT, p_isEmpresa INT)
+BEGIN
+	DECLARE isEmpresa VARCHAR(15);
+	-- SET @isEmpresa = 'empresa_offer';
+    IF p_isEmpresa = 0 THEN
+		isEmpresa = 'postulant_offer';
+    END IF;
+	SET @EMPRESA
+	SELECT
+		o.* 
+	FROM empresa_offer eo
+	INNER JOIN offer o
+		ON eo.offer_id = o.id
+	WHERE eo.usuario_id = 1000;
+END$$
+DELIMiTER ;
+
+	SET @wheres = CONCAT('SELECT * FROM offer_languages ol INNER JOIN languages l ON ol.id_language = l.id INNER JOIN offer o ON ol.id_offer = o.id  WHERE l.id IN (', p_chain, ')');
+    PREPARE funca FROM  @wheres;
+	EXECUTE funca;
+	DEALLOCATE PREPARE funca;
+
+
+SELECT * FROM offer;
+
+
+SELECT * FROM usuario ;
+
+
