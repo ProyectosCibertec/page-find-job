@@ -4,7 +4,7 @@ DROP DATABASE IF EXISTS pageFindJob;
 CREATE DATABASE pageFindJob;
 -- activamos la bd
 USE pageFindJob;
-
+ 
 CREATE TABLE pais(
 	id					INT 			NOT NULL PRIMARY KEY AUTO_INCREMENT,
     name				VARCHAR(20)		NOT NULL
@@ -144,6 +144,8 @@ BEGIN
 END$$
 DELIMiTER ;
 
+
+
 DELIMITER $$
 CREATE PROCEDURE ups_register_user(
 	p_email			VARCHAR(50),
@@ -167,6 +169,25 @@ BEGIN
     END IF;
 END $$
 DELIMITER ;
+
+
+
+DELIMiTER $$
+CREATE PROCEDURE usp_change_password(p_email VARCHAR(50), p_password VARCHAR(50), p_fecha_update DATETIME, OUT p_result INT)
+BEGIN
+	 set @id = 0;
+     set @size = 0;
+	 SELECT id, count(*) INTO @id, @size FROM usuario WHERE email = p_email group by 1;
+     
+	 IF @size <= 0 THEN
+		SET p_result = 0;
+     ELSE
+		UPDATE usuario SET password = p_password, update_date = p_fecha_update WHERE id = @id;
+        SET p_result = 1;
+     END IF;
+END$$
+DELIMiTER ;
+
 
 -- insert PAIS
 

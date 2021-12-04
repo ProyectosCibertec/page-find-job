@@ -137,7 +137,7 @@ public class DAOUserMySQL implements UserInterface {
 			}
 
 		} catch (Exception e) {
-			System.out.println("Handle error -> Get User :  " + e.getMessage());
+			System.out.println("Handle error -> findByIdOrEmail User :  " + e.getMessage());
 		} finally {
 			MySQLConnection.closeConnection(conn);
 		}
@@ -153,30 +153,27 @@ public class DAOUserMySQL implements UserInterface {
 
 		int result = 0;
 
-		Connection con = null;
-		PreparedStatement pst = null;
+		Connection conn = null;
+		CallableStatement cs = null;
 
 		try {
-			con = MySQLConnection.getConnection();
-			String sql = "UPDATE usuario SET password=?, update_date=? WHERE email=?";
+			conn = MySQLConnection.getConnection();
+			String sql = "{call usp_change_password(?,?,?,?)}";
 
-			pst = con.prepareStatement(sql);
+			cs = conn.prepareCall(sql);
 
-			pst.setString(1, email);
-			pst.setString(2, currentDate);
-			pst.setString(3, password);
+			cs.setString(1, email);
+			cs.setString(2, password);
+			cs.setString(3, currentDate);
 
-			result = pst.executeUpdate();
+			result = cs.executeUpdate();
+
+			int demo = cs.getInt(4);
 
 		} catch (Exception e) {
-			System.out.println("Error al cambiar contraseña : " + e.getMessage());
+			System.out.println("Handle error -> restorePassword user : " + e.getMessage());
 		} finally {
-			try {
-				if (pst != null || con != null)
-					con.close();
-			} catch (Exception e2) {
-				System.out.println("Error al cerrar: " + e2.getMessage());
-			}
+			MySQLConnection.closeConnection(conn);
 		}
 
 		return result;

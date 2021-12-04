@@ -68,7 +68,7 @@
 					role="alert" aria-live="assertive" aria-atomic="true">
 			    <div class="toast-body d-flex justify-content-between">
 					<span style="color: white;"> 
-						${ok == -1 ? 'Las contraseñas no coinciden.' : ok == 0 ? 'El email ya se encuentra registrado en nuestro sistema.' : 'Se registró con exito'}
+						${ ok == 0 ? 'El email ya se encuentra registrado en nuestro sistema.' :  ok == 1 ? 'Se registró con exito' : 'Las contraseñas no coinciden.'}
 					</span>
 				    <div>
 						<button type="button" class="btn-close" data-bs-dismiss="toast"

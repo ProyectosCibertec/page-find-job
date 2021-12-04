@@ -1,6 +1,9 @@
 package servlets;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -19,6 +22,8 @@ public class UserServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	DAOFactory factory = DAOFactory.getDAOFactory(DAOFactory.MYSQL);
+	DateTimeFormatter date = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+	String currentDate = date.format(LocalDateTime.now());
 
 	/**
 	 * @see HttpServlet#HttpServlet()
@@ -41,41 +46,19 @@ public class UserServlet extends HttpServlet {
 			btn = "logout";
 
 		switch (btn) {
-		case "register":
-			register(request, response);
-			break;
 		case "login":
 			login(request, response);
 			break;
+		case "register":
+			register(request, response);
+			break;
 		case "restore":
 			restore(request, response);
+			break;
 		default:
 			request.getSession().invalidate();
 			response.sendRedirect("sign-in.jsp");
 		}
-	}
-
-	private void restore(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		String email, pass, retryPass, url, message = "";
-
-		email = request.getParameter("inputEmail") == null ? null : request.getParameter("inputEmail");
-		pass = request.getParameter("inputPassword") == null ? null : request.getParameter("inputPassword");
-		retryPass = request.getParameter("inputPassword") == null ? null : request.getParameter("inputRetryPassword");
-
-		// To do
-		int ok = factory.getUserDAO().restorePassword(email, pass);
-
-		if (ok == 0) {
-			url = "login.jsp";
-		} else {
-			url = "new-password.jsp";
-			message = "Usuario o contraseña inválidos";
-		}
-		request.getSession().setAttribute("ok", ok);
-		request.setAttribute("message", message);
-		request.getRequestDispatcher(url).forward(request, response);
-
 	}
 
 	private void login(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -115,11 +98,12 @@ public class UserServlet extends HttpServlet {
 		retryPass = request.getParameter("inputRetryPassword");
 
 		if (!pass.equals(retryPass)) {
+			request.getSession().setAttribute("ok", ok);
 			response.sendRedirect(request.getHeader("Referer"));
 			return;
 		}
 
-		User u = new User(email, pass, name, lastName, birthDate, 0, birthDate);
+		User u = new User(email, pass, name, lastName, birthDate, 0, currentDate);
 		ok = factory.getUserDAO().register(u);
 
 		request.getSession().setAttribute("ok", ok);
@@ -130,6 +114,36 @@ public class UserServlet extends HttpServlet {
 		}
 
 		request.getRequestDispatcher("register.jsp").forward(request, response);
+
+	}
+
+	private void restore(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		String email, pass, retryPass, url = "new-password.jsp";
+
+		email = request.getParameter("inputEmail");
+		pass = request.getParameter("inputPassword");
+		retryPass = request.getParameter("inputRetryPassword");
+		int ok = -1;
+
+		if (!pass.equals(retryPass)) {
+			request.getSession().setAttribute("ok", ok);
+			response.sendRedirect(url);
+			return;
+		}
+
+		ok = factory.getUserDAO().restorePassword(email, pass);
+
+		request.getSession().setAttribute("ok", ok);
+
+		if (ok == 0) {
+			response.sendRedirect(url);
+			return;
+		}
+
+		request.getSession().setAttribute("isPasswordChanged", 1);
+
+		response.sendRedirect(url);
 
 	}
 
