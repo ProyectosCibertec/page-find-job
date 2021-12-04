@@ -3,6 +3,7 @@ package dao;
 import interfaces.LanguageInterface;
 import interfaces.OfferInterface;
 import interfaces.OfferLanguageInterface;
+import interfaces.OfferUserInterface;
 import interfaces.UserInterface;
 
 // "Crear" las implementaciones con las fuentes de datos
@@ -20,6 +21,8 @@ public abstract class DAOFactory {
 	public abstract OfferInterface getOfferDAO();
 
 	public abstract OfferLanguageInterface getOfferLanguageDAO();
+	
+	public abstract OfferUserInterface getOfferUserDAO();
 
 	public static DAOFactory getDAOFactory(int qBD) { // "Constructo"
 		switch (qBD) {

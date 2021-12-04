@@ -3,10 +3,12 @@ package dao;
 import interfaces.LanguageInterface;
 import interfaces.OfferInterface;
 import interfaces.OfferLanguageInterface;
+import interfaces.OfferUserInterface;
 import interfaces.UserInterface;
 import management.DAOLanguageMySQL;
 import management.DAOOfferLanguageMySQL;
 import management.DAOOfferMySQL;
+import management.DAOOfferUserMySQL;
 import management.DAOUserMySQL;
 
 public class MySQLDAOFactory extends DAOFactory {
@@ -33,5 +35,11 @@ public class MySQLDAOFactory extends DAOFactory {
 	public OfferLanguageInterface getOfferLanguageDAO() {
 		// TODO Auto-generated method stub
 		return new DAOOfferLanguageMySQL();
+	}
+
+	@Override
+	public OfferUserInterface getOfferUserDAO() {
+		// TODO Auto-generated method stub
+		return new DAOOfferUserMySQL();
 	}
 }

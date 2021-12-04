@@ -47,7 +47,8 @@
 			<c:tag language="${l.languageName}" />
 		</f:forEach>
 	</div>
-	<div class="col-2" style="text-align: right; margin: auto;">
-		<input type="button" class="btn btn-warning" value="APLICAR">
-	</div>
+	<form method="POST" action="offerServlet" class="col-2" style="text-align: right; margin: auto;">
+		<input type="text" name="inputOfferId" class="btn btn-warning" value="${offerId}" hidden="true">
+		<button type="submit" class="btn btn-warning" name="button" value="apply">APLICAR</button>
+	</form>
 </div>
