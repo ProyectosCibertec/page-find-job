@@ -200,6 +200,25 @@ INSERT INTO usuario VALUES(default,'demo2@demo.com', 1234, 'Demo2', 'Lastname De
 INSERT INTO usuario VALUES(default,'demo3@demo.com', 1234, 'Demo3', 'Lastname Demo', '999999999', '2010-09-15', 1, 0 ,0, 'Av siempre viva',1,'2010-09-15 17:14:12', null);
 
 
+-- inset SKILLS
+
+INSERT INTO skills VALUES(null, "Liderazgo");
+INSERT INTO skills VALUES(null, "Flexibilidad");
+INSERT INTO skills VALUES(null, "Adaptación");
+INSERT INTO skills VALUES(null, "Capacidad resolutiva");
+INSERT INTO skills VALUES(null, "Motivación");
+INSERT INTO skills VALUES(null, "Confianza");
+INSERT INTO skills VALUES(null, "Trabajo en equipo");
+INSERT INTO skills VALUES(null, "PLanificación");
+INSERT INTO skills VALUES(null, "Positivismo");
+INSERT INTO skills VALUES(null, "Habilidades comunicativas");
+INSERT INTO skills VALUES(null, "Mentoría");
+INSERT INTO skills VALUES(null, "Gestión de programas");
+INSERT INTO skills VALUES(null, "Motores de búsqueda");
+INSERT INTO skills VALUES(null, "Ingeniería de datos");
+INSERT INTO skills VALUES(null, "Pequeña empresa");
+INSERT INTO skills VALUES(null, "Cumplimiento de pedidos");
+
 -- inserts LANGUAGES
 
 call usp_add_language('JAVA');
@@ -586,10 +605,6 @@ call usp_add_offer_language(1019,23);
 call usp_add_offer_language(1004,21);
 call usp_add_offer_language(1014,21);
 
-SELECT * FROM offer;
-SELECT * FROM languages;
-
-
 DELIMiTER $$
 CREATE PROCEDURE usp_list_language_by_offer(v_offer_id INT)
 BEGIN
@@ -603,7 +618,52 @@ BEGIN
 END$$
 DELIMiTER ;
 
-call usp_list_language_by_offer('1017');
+call usp_list_language_by_offer(1044);
 
+-- PROC QUE FILTRA LAS OFERTAS POR TITULO
+DROP PROCEDURE usp_get_offer_by_title;
+DELIMiTER $$
+CREATE PROCEDURE usp_get_offer_by_title(chain VARCHAR(50))
+BEGIN
+	 SELECT * FROM offer WHERE title LIKE (CONCAT("%",chain,"%"));
+END$$
+DELIMiTER ;
 
+DROP PROCEDURE usp_demo;
+DELIMiTER $$
+CREATE PROCEDURE usp_demo(chain VARCHAR(50))
+BEGIN
+	 SELECT * FROM offer;
+END$$
+DELIMiTER ;
+
+call usp_get_offer_by_title("Desarro");
+
+-- PROC PARA TRAER LAS OFERTAS POR LENGUAJES
+DELIMiTER $$
+CREATE PROCEDURE usp_demoo(p_chain VARCHAR(50))
+BEGIN
+	SET @wheres = CONCAT('SELECT * FROM offer_languages ol INNER JOIN languages l ON ol.id_language = l.id INNER JOIN offer o ON ol.id_offer = o.id  WHERE l.id IN (', p_chain, ')');
+    PREPARE funca FROM  @wheres;
+	EXECUTE funca;
+	DEALLOCATE PREPARE funca;
+END$$
+DELIMiTER ;
+
+call usp_demoo('1,2,3,4,5');
+
+-- PROC QUE DEVUELVE LA ULTIMA OFERTA
+DELIMiTER $$
+CREATE PROCEDURE usp_get_last_offer()
+BEGIN
+	 SELECT * FROM offer ORDER BY id DESC LIMIT 1;
+END$$
+DELIMiTER ;
+
+call usp_get_last_offer();
+
+SELECT CONCAT('%', "Hola", '%');
+
+SELECT * FROM offer;
+SELECT * FROM languages;
 
