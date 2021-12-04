@@ -10,8 +10,7 @@ CREATE TABLE pais(
     name				VARCHAR(20)		NOT NULL
 );
 
-CREATE TABLE usuario (
-	id					INT 			NOT NULL PRIMARY KEY AUTO_INCREMENT,
+CREATE TABLE usuario (id					INT 			NOT NULL PRIMARY KEY AUTO_INCREMENT,
     email				VARCHAR(50)		NOT NULL,
     password			VARCHAR(50)		NOT NULL,
     name				VARCHAR(25)		NOT NULL,
@@ -195,9 +194,9 @@ INSERT INTO pais VALUES(DEFAULT, 'Perú'),(DEFAULT, 'Argentina'),(DEFAULT, 'Boli
 
 -- insert USERS
 
-INSERT INTO usuario VALUES(default,'demo@demo.com', '1234', 'Demo1', 'Lastname Demo', '999999999', '2010-09-15', default, 0 ,0, 'Av siempre viva',1,'2010-09-15 17:14:12', null);
-INSERT INTO usuario VALUES(default,'demo2@demo.com', 1234, 'Demo2', 'Lastname Demo', '999999999', '2010-09-15', 1, 0 ,0, 'Av siempre viva',1,'2010-09-15 17:14:12', null);
-INSERT INTO usuario VALUES(default,'demo3@demo.com', 1234, 'Demo3', 'Lastname Demo', '999999999', '2010-09-15', 1, 0 ,0, 'Av siempre viva',1,'2010-09-15 17:14:12', null);
+INSERT INTO usuario VALUES(default,'villagaray@demo.com', '1234', 'Demo1', 'Lastname Demo', '999999999', '2010-09-15', DEFAULT, DEFAULT,1, 'Av siempre viva',1,'2010-09-15 17:14:12', null);
+INSERT INTO usuario VALUES(default,'torres@demo.com', 1234, 'Demo2', 'Lastname Demo', '999999999', '2010-09-15', DEFAULT, DEFAULT ,0, 'Av siempre viva',1,'2010-09-15 17:14:12', null);
+INSERT INTO usuario VALUES(default,'soto@demo.com', 1234, 'Demo3', 'Lastname Demo', '999999999', '2010-09-15', DEFAULT, DEFAULT ,0, 'Av siempre viva',1,'2010-09-15 17:14:12', null);
 
 
 -- inset SKILLS
@@ -655,8 +654,8 @@ DELIMiTER ;
 
 call usp_get_last_offer();
 
-SELECT CONCAT('%', "Hola", '%');
 
 SELECT * FROM offer;
 SELECT * FROM languages;
 
+Select * from usuario;

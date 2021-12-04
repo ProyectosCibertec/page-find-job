@@ -24,8 +24,10 @@ User uo = (User) request.getSession().getAttribute("u");
 				<ul
 					class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
 					<li><a href="${basePath}" class="nav-link px-2 text-secondary">Inicio</a></li>
-					<li><a href="publicar-ofertas.jsp" class="nav-link px-2 text-white">Publicar
-							ofertas</a></li>
+					<f:if test="${u.isEmpresa == 1 || u == null}">
+						<li><a href="publicar-ofertas.jsp" class="nav-link px-2 text-white">Publicar
+								ofertas</a></li>
+					</f:if>
 					<li><a href="${basePath}nosotros.jsp"
 						class="nav-link px-2 text-white">Nosotros</a></li>
 				</ul>
@@ -46,7 +48,7 @@ User uo = (User) request.getSession().getAttribute("u");
 					</a>
 					<ul class="dropdown-menu text-small"
 						aria-labelledby="dropdownUser1">
-						<li><span class="dropdown-item">${u.email}</span></li>
+						<li><span class="dropdown-item disabled">${u.name } ${u.lastName}</span></li>
 						<li><a class="dropdown-item" href="${basePath}profile.jsp">Perfil</a></li>
 
 						<li><a class="dropdown-item"

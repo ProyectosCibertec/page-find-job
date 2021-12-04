@@ -9,24 +9,21 @@
 <%@taglib prefix="c" tagdir="/WEB-INF/tags/components"%>
 
 <%
-User uo = (User) request.getSession().getAttribute("u");
-
-if (null == uo) {
-	response.sendRedirect("http://localhost:8081/page-find-job/sign-in.jsp");
-	return;
-}
-
 DAOFactory factory = DAOFactory.getDAOFactory(DAOFactory.MYSQL);
 ArrayList<Language> languageList = factory.getLanguageDAO().list();
 
 pageContext.setAttribute("languageList", languageList);
-
 %>
 
-<link rel="stylesheet" href="./assets/css/profile.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<f:if test="${u == null}">
+	<f:redirect url="/sign-in.jsp" />
+</f:if>
+<f:if test="${u.isEmpresa == 0}">
+	<f:redirect url="/index.jsp" />
+</f:if>
 
-<t:layout titlePage="Publicar oferta">
+<t:layout titlePage="Publicar oferta" css="profile.css"
+	cssExternal="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 	<jsp:body>
 		<div class="container">
 		  <main class="d-flex flex-column align-items-center mb-5">
@@ -37,20 +34,24 @@ pageContext.setAttribute("languageList", languageList);
 						<form action="offerServlet" method="POST">
 							  <div class="form-group mt-2">
    								 <label for="inputTitle" class="mb-2">Título / Puesto</label>
-    							 <input type="text" class="form-control" name="inputTitle" placeholder="" max="50" value="${title}">
+    							 <input type="text" class="form-control" name="inputTitle"
+										placeholder="" max="50" value="${title}">
   							  </div>
   							  <div class="form-group mt-2">
    								 <label for="inputDescripcion" class="mb-2">Descripción</label>
-    							 <textarea class="form-control" name="inputDescripcion" placeholder="" rows="12" maxlength="2500">${descripcion}</textarea>
+    							 <textarea class="form-control" name="inputDescripcion"
+										placeholder="" rows="12" maxlength="2500">${descripcion}</textarea>
   							  </div>
   							  <div class="row mt-2">
   							     <div class="form-group col-md-6">
    									 <label for="inputVacantes" class="mb-2">Nro de vacantes</label>
-    								 <input type="number" class="form-control" name="inputVacantes" placeholder="" value="${vacantes}">
+    								 <input type="number" class="form-control"
+											name="inputVacantes" placeholder="" value="${vacantes}">
   							  	 </div>
   							  	 <div class="form-group col-md-6">
    									 <label for="inputFecha" class="mb-2">Fecha limite</label>
-    								 <input type="date" class="form-control" name="inputFecha" placeholder="" value="${fecha}">
+    								 <input type="date" class="form-control" name="inputFecha"
+											placeholder="" value="${fecha}">
   							  	 </div>
   							  </div>
   							   <div class="row mt-2 mb-4">
@@ -63,11 +64,15 @@ pageContext.setAttribute("languageList", languageList);
     							 		     </f:forEach>
     							 		</select>
   							  		</div>
-  							  		<button name="button" value="add" style="border-radius: 50%; width: 40; height: 40; align-self: flex-end" 
-  							  		class="btn btn-primary" type="submit"><i class="fa fa-plus"></i></button>
+  							  		<button name="button" value="add"
+										style="border-radius: 50%; width: 40; height: 40; align-self: flex-end"
+										class="btn btn-primary" type="submit">
+										<i class="fa fa-plus"></i>
+									</button>
   							  		 <f:if test="${ languagesOfferList != null}">
 							 			<button name="button" value="remove"
-  							  		 	class="btn btn-link col-md-2 text-danger" type="submit" style="align-self: flex-end">Limpiar lenguajes</button>
+											class="btn btn-link col-md-2 text-danger" type="submit"
+											style="align-self: flex-end">Limpiar lenguajes</button>
 							 		</f:if>
   							  </div>
   							  <div class="col-8 mx-auto mb-4">
@@ -76,7 +81,7 @@ pageContext.setAttribute("languageList", languageList);
 							 	</f:forEach>
 							  </div>
 		      				  <button name="button" value="register"
-						      class="w-22 btn btn-md btn-primary"  type="submit">Registrar</button>
+									class="w-22 btn btn-md btn-primary" type="submit">Registrar</button>
 		    			</form>
 					</div>
 				</div>
