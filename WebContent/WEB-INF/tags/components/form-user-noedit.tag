@@ -53,7 +53,7 @@ User user = (User) request.getSession().getAttribute("u");
 		<hr>
 		<div class="row">
 			<div class="col-sm-12">
-				<a class="btn btn-info" id="btnEdit">Edit</a>
+				<a class="btn btn-info" id="btnEdit">Editar</a>
 			</div>
 		</div>
 	</div>
@@ -63,7 +63,9 @@ User user = (User) request.getSession().getAttribute("u");
 <script>
 	const edit = document.querySelector('#btnEdit')
 		edit.addEventListener('click', e => {
-			console.log(e.target)
+	    <%request.getSession().setAttribute("isEdit", true);%>
+	    console.log('creado')
+	    window.location.reload()
 		})
 </script>
 

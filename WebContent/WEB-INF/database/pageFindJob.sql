@@ -10,7 +10,8 @@ CREATE TABLE pais(
     name				VARCHAR(20)		NOT NULL
 );
 
-CREATE TABLE usuario (id					INT 			NOT NULL PRIMARY KEY AUTO_INCREMENT,
+CREATE TABLE usuario (
+	id					INT 			NOT NULL PRIMARY KEY AUTO_INCREMENT,
     email				VARCHAR(50)		NOT NULL,
     password			VARCHAR(50)		NOT NULL,
     name				VARCHAR(25)		NOT NULL,
@@ -188,15 +189,37 @@ END$$
 DELIMiTER ;
 
 
+DELIMiTER $$
+CREATE PROCEDURE usp_update_user(
+	p_code int,
+    p_name VARCHAR(25),
+    p_lastName VARCHAR(255),
+    p_telephone CHAR(11),
+    p_birthDate DATE,
+    p_address VARCHAR(200),
+    p_updateDate DATETIME
+)
+BEGIN
+	UPDATE usuario SET
+		name = p_name,
+		lastname = p_lastName,
+		phone = p_telephone,
+		birth_date = p_birthDate,
+		address = p_address,
+		update_date = p_updateDate
+	WHERE id = p_code;
+END$$
+DELIMiTER ;
+
 -- insert PAIS
 
 INSERT INTO pais VALUES(DEFAULT, 'Perú'),(DEFAULT, 'Argentina'),(DEFAULT, 'Bolivia'),(DEFAULT, 'Ecuador'),(DEFAULT, 'Venezuela'), (DEFAULT, 'Chile');
 
 -- insert USERS
 
-INSERT INTO usuario VALUES(default,'villagaray@demo.com', '1234', 'Demo1', 'Lastname Demo', '999999999', '2010-09-15', DEFAULT, DEFAULT,1, 'Av siempre viva',1,'2010-09-15 17:14:12', null);
-INSERT INTO usuario VALUES(default,'torres@demo.com', 1234, 'Demo2', 'Lastname Demo', '999999999', '2010-09-15', DEFAULT, DEFAULT ,0, 'Av siempre viva',1,'2010-09-15 17:14:12', null);
-INSERT INTO usuario VALUES(default,'soto@demo.com', 1234, 'Demo3', 'Lastname Demo', '999999999', '2010-09-15', DEFAULT, DEFAULT ,0, 'Av siempre viva',1,'2010-09-15 17:14:12', null);
+INSERT INTO usuario VALUES(default,'dvillagaray@demo.com', '1234', 'Dennis', 'Villagaray Gormas', '987934123', '1996-09-06', DEFAULT, DEFAULT,1, 'Av siempre viva',1,'2010-09-15 17:14:12', null);
+INSERT INTO usuario VALUES(default,'ftorres@demo.com', 1234, 'Fernando', 'Torres Gutierrez', '977654823', '1995-09-08', DEFAULT, DEFAULT ,0, 'Av siempre viva',1,'2010-09-15 17:14:12', null);
+INSERT INTO usuario VALUES(default,'asoto@demo.com', 1234, 'Adrian', 'Soto Hidalgo', '946334766', '2010-09-15', DEFAULT, DEFAULT ,0, 'Av siempre viva',1,'2010-09-15 17:14:12', null);
 
 
 -- inset SKILLS

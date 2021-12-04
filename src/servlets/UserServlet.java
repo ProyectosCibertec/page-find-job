@@ -55,10 +55,39 @@ public class UserServlet extends HttpServlet {
 		case "restore":
 			restore(request, response);
 			break;
+		case "update":
+			update(request, response);
+			break;
 		default:
 			request.getSession().invalidate();
 			response.sendRedirect("sign-in.jsp");
 		}
+	}
+
+	private void update(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String name, lastName, phone, birthDate, address, message = "";
+		int code, ok;
+
+		code = request.getParameter("inputCode") == null ? null : Integer.parseInt(request.getParameter("inputCode"));
+		name = request.getParameter("inputName") == null ? null : request.getParameter("inputName");
+		lastName = request.getParameter("inputLastName") == null ? null : request.getParameter("inputLastName");
+		phone = request.getParameter("inputPhone") == null ? null : request.getParameter("inputPhone");
+		birthDate = request.getParameter("inputBirthDate") == null ? null : request.getParameter("inputBirthDate");
+		address = request.getParameter("inputAddress") == null ? null : request.getParameter("inputAddress");
+
+		User u = new User(code, name, lastName, phone, birthDate, address);
+		ok = factory.getUserDAO().update(u);
+
+		request.getSession().setAttribute("ok", ok);
+		if (ok != 1) {
+			response.sendRedirect(request.getHeader("Referer"));
+			return;
+		}
+		u = factory.getUserDAO().getById(code);
+
+		request.getSession().setAttribute("u", u);
+		request.getSession().setAttribute("message", message);
+		request.getRequestDispatcher("profile.jsp").forward(request, response);
 	}
 
 	private void login(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -81,6 +110,7 @@ public class UserServlet extends HttpServlet {
 		request.getSession().setAttribute("u", u);
 		request.getSession().setAttribute("message", message);
 		request.getRequestDispatcher(url).forward(request, response);
+
 	}
 
 	private void register(HttpServletRequest request, HttpServletResponse response)
@@ -145,4 +175,5 @@ public class UserServlet extends HttpServlet {
 		response.sendRedirect(url);
 
 	}
+
 }

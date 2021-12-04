@@ -12,6 +12,8 @@ import model.User;
 import utils.MySQLConnection;
 
 public class DAOUserMySQL implements UserInterface {
+	DateTimeFormatter date = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+	String currentDate = date.format(LocalDateTime.now());
 
 	@Override
 	public User get(String email, String password) {
@@ -42,6 +44,41 @@ public class DAOUserMySQL implements UserInterface {
 
 		} catch (Exception e) {
 			System.out.println("Handle error -> Get User :  " + e.getMessage());
+		} finally {
+			MySQLConnection.closeConnection(conn);
+		}
+
+		return u;
+	}
+
+	@Override
+	public User getById(int id) {
+		User u = null;
+		ResultSet result = null;
+
+		Connection conn = null;
+		PreparedStatement pst = null;
+
+		try {
+			conn = MySQLConnection.getConnection();
+
+			String sql = "SELECT * FROM usuario WHERE id = ?";
+
+			pst = conn.prepareStatement(sql);
+
+			pst.setInt(1, id);
+
+			result = pst.executeQuery();
+
+			if (result.next()) {
+				u = new User(result.getInt(1), result.getString(2), result.getString(3), result.getString(4),
+						result.getString(5), result.getString(6), result.getString(7), result.getInt(8),
+						result.getInt(9), result.getInt(10), result.getString(11), result.getInt(12),
+						result.getString(13), result.getString(14));
+			}
+
+		} catch (Exception e) {
+			System.out.println("Handle error -> Get User by ID :  " + e.getMessage());
 		} finally {
 			MySQLConnection.closeConnection(conn);
 		}
@@ -87,21 +124,24 @@ public class DAOUserMySQL implements UserInterface {
 	public int update(User u) {
 		int result = 0;
 
-		// template
 		Connection conn = null;
-		PreparedStatement pst = null;
+		CallableStatement cs = null;
 
 		try {
 			conn = MySQLConnection.getConnection();
-			String sql = "{call usp_update_user(?,?,?)}";
+			String sql = "{call usp_update_user(?,?,?,?,?,?,?)}";
 
-			pst = conn.prepareStatement(sql);
+			cs = conn.prepareCall(sql);
 
-			pst.setString(1, u.getEmail());
-			pst.setString(2, u.getPasworrd());
-			pst.setString(3, u.getUpdateDate());
+			cs.setInt(1, u.getCode());
+			cs.setString(2, u.getName());
+			cs.setString(3, u.getLastName());
+			cs.setString(4, u.getPhone());
+			cs.setString(5, u.getBirthDate());
+			cs.setString(6, u.getAddress());
+			cs.setString(7, currentDate);
 
-			result = pst.executeUpdate();
+			result = cs.executeUpdate();
 
 		} catch (Exception e) {
 			System.out.println("Handle Error -> Update User: " + e.getMessage());
@@ -150,9 +190,6 @@ public class DAOUserMySQL implements UserInterface {
 	@Override
 	public int restorePassword(String email, String password) {
 
-		DateTimeFormatter date = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-		String currentDate = date.format(LocalDateTime.now());
-
 		int result = 0;
 
 		Connection conn = null;
@@ -170,7 +207,7 @@ public class DAOUserMySQL implements UserInterface {
 
 			result = cs.executeUpdate();
 
-			int demo = cs.getInt(4);
+			cs.getInt(4);
 
 		} catch (Exception e) {
 			System.out.println("Handle error -> restorePassword user : " + e.getMessage());

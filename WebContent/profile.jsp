@@ -9,16 +9,10 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="f"%>
 <%@taglib prefix="c" tagdir="/WEB-INF/tags/components"%>
 
-<%
-User uo = (User) request.getSession().getAttribute("u");
 
-if (null == uo) {
-	response.sendRedirect("http://localhost:8081/page-find-job/sign-in.jsp");
-	return;
-}
-
-System.out.println("aaaa: " + uo);
-%>
+<f:if test="${u == null}">
+	<f:redirect url="/sign-in.jsp" />
+</f:if>
 
 <link rel="stylesheet" href="./assets/css/profile.css">
 
@@ -37,11 +31,8 @@ System.out.println("aaaa: " + uo);
 										src="https://bootdey.com/img/Content/avatar/avatar7.png"
 										alt="Admin" class="rounded-circle" width="150">
                     <div class="mt-3">
-                      <h4>John Doe</h4>
+                      <h4>${u.name} ${u.lastName}</h4>
                       <p class="text-secondary mb-1">Full Stack Developer</p>
-                      <p class="text-muted font-size-sm">Bay Area, San Francisco, CA</p>
-                      <button class="btn btn-primary">Follow</button>
-                      <button class="btn btn-outline-primary">Message</button>
                     </div>
                   </div>
                 </div>

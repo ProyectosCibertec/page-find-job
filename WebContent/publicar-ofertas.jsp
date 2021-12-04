@@ -65,7 +65,7 @@ pageContext.setAttribute("languageList", languageList);
     							 		</select>
   							  		</div>
   							  		<button name="button" value="add"
-										style="border-radius: 50%; width: 40; height: 40; align-self: flex-end"
+										style="border-radius: 50%; width: 40px; height: 40px; align-self: flex-end"
 										class="btn btn-primary" type="submit">
 										<i class="fa fa-plus"></i>
 									</button>

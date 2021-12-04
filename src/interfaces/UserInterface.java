@@ -6,6 +6,8 @@ public interface UserInterface {
 
 	public User get(String email, String password);
 
+	public User getById(int id);
+
 	public int register(User u);
 
 	public int update(User u);

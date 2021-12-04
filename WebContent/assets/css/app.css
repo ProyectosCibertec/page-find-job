@@ -1,5 +1,11 @@
 @charset "UTF-8";
 
+body {
+	color: #1a202c;
+	text-align: left;
+	background-color: #e2e8f0;
+}
+
 .img-home {
 	max-width: 100px;
 	width: 100%;

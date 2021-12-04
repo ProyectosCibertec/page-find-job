@@ -21,7 +21,7 @@
 					
 					<div class="form-floating">
 					   <input type="text" class="form-control required" id="inputName"
-							name="inputName" placeholder="name@example.com">
+							name="inputName" placeholder="Nombres">
 					   <label for="inputName">Nombres</label>
 					</div>
 
