@@ -80,8 +80,7 @@ public class UserServlet extends HttpServlet {
 		}
 		request.getSession().setAttribute("u", u);
 		request.getSession().setAttribute("message", message);
-//		request.getRequestDispatcher(url).forward(request, response);
-		response.sendRedirect(request.getHeader("Referer"));
+		request.getRequestDispatcher(url).forward(request, response);
 	}
 
 	private void register(HttpServletRequest request, HttpServletResponse response)
@@ -146,5 +145,4 @@ public class UserServlet extends HttpServlet {
 		response.sendRedirect(url);
 
 	}
-
 }

@@ -621,7 +621,7 @@ DELIMiTER ;
 call usp_list_language_by_offer(1044);
 
 -- PROC QUE FILTRA LAS OFERTAS POR TITULO
-DROP PROCEDURE usp_get_offer_by_title;
+
 DELIMiTER $$
 CREATE PROCEDURE usp_get_offer_by_title(chain VARCHAR(50))
 BEGIN
@@ -629,13 +629,6 @@ BEGIN
 END$$
 DELIMiTER ;
 
-DROP PROCEDURE usp_demo;
-DELIMiTER $$
-CREATE PROCEDURE usp_demo(chain VARCHAR(50))
-BEGIN
-	 SELECT * FROM offer;
-END$$
-DELIMiTER ;
 
 call usp_get_offer_by_title("Desarro");
 
