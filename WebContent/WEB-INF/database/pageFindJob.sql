@@ -671,7 +671,6 @@ BEGIN
 END$$
 DELIMiTER ;
 
-call usp_demoo('1,2,3,4,5');
 
 -- PROC QUE DEVUELVE LA ULTIMA OFERTA
 DELIMiTER $$
@@ -681,42 +680,19 @@ BEGIN
 END$$
 DELIMiTER ;
 
-call usp_get_last_offer();
-
-
-SELECT * FROM offer;
-SELECT * FROM languages;
-
-Select * from usuario;
 
 -- PROC LISTAR OFERTAS DE UNA EMPRESA
 DELIMiTER $$
 CREATE PROCEDURE usp_list_offer_by_usuario(p_codeUser INT, p_isEmpresa INT)
 BEGIN
-	DECLARE isEmpresa VARCHAR(15);
-	-- SET @isEmpresa = 'empresa_offer';
+
+	SET @search_table = 'empresa_offer';
     IF p_isEmpresa = 0 THEN
-		isEmpresa = 'postulant_offer';
+		SET @search_table = 'postulant_offer';
     END IF;
-	SET @EMPRESA
-	SELECT
-		o.* 
-	FROM empresa_offer eo
-	INNER JOIN offer o
-		ON eo.offer_id = o.id
-	WHERE eo.usuario_id = 1000;
+	SET @qr = CONCAT('SELECT o.* FROM ',@search_table, ' t INNER JOIN offer o ON t.offer_id = o.id WHERE t.usuario_id = ', p_codeUser);
+    PREPARE executeQuery FROM  @qr;
+	EXECUTE executeQuery;
+	DEALLOCATE PREPARE executeQuery;
 END$$
 DELIMiTER ;
-
-	SET @wheres = CONCAT('SELECT * FROM offer_languages ol INNER JOIN languages l ON ol.id_language = l.id INNER JOIN offer o ON ol.id_offer = o.id  WHERE l.id IN (', p_chain, ')');
-    PREPARE funca FROM  @wheres;
-	EXECUTE funca;
-	DEALLOCATE PREPARE funca;
-
-
-SELECT * FROM offer;
-
-
-SELECT * FROM usuario ;
-
-
